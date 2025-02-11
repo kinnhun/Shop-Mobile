@@ -4,904 +4,306 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <title>MultiShop - Online Shop Website Template</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
+    <head>
+        <meta charset="utf-8">
+        <title>MultiShop - Online Shop Website Template</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="Free HTML Templates" name="keywords">
+        <meta content="Free HTML Templates" name="description">
 
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+        <!-- Favicon -->
+        <link href="img/favicon.ico" rel="icon">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">  
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">  
 
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <!-- Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <!-- Libraries Stylesheet -->
+        <link href="lib/animate/animate.min.css" rel="stylesheet">
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
-</head>
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
+    </head>
 
-<body>
-
-    
-<c:import url="./header.jsp" />
+    <body>
 
 
-    <!-- Carousel Start -->
-    <div class="container-fluid mb-3">
-        <div class="row px-xl-5">
-            <div class="col-lg-8">
-                <div id="header-carousel" class="carousel slide carousel-fade mb-30 mb-lg-0" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#header-carousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#header-carousel" data-slide-to="1"></li>
-                        <li data-target="#header-carousel" data-slide-to="2"></li>
-                    </ol>
-                    <div class="carousel-inner">
-                        <div class="carousel-item position-relative active" style="height: 430px;">
-                            <img class="position-absolute w-100 h-100" src="img/carousel-1.jpg" style="object-fit: cover;">
-                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <div class="p-3" style="max-width: 700px;">
-                                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Men Fashion</h1>
-                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
-                                    <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="#">Shop Now</a>
+        <c:import url="./header.jsp" />
+
+
+        <!-- Carousel Start -->
+        <div class="container-fluid mb-3">
+            <div class="row px-xl-5">
+                <div class="col-lg-8">
+                    <div id="header-carousel" class="carousel slide carousel-fade mb-30 mb-lg-0" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#header-carousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#header-carousel" data-slide-to="1"></li>
+                            <li data-target="#header-carousel" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item position-relative active" style="height: 430px;">
+                                <img class="position-absolute w-100 h-100" src="https://cdn.tgdd.vn/Files/2023/09/13/1547133/1-300923-014812.jpg" style="object-fit: cover;">
+                                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                    <div class="p-3" style="max-width: 700px;">
+                                        <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">iPhone 15 Pro Max</h1>
+                                        <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Trải nghiệm hiệu năng mạnh mẽ với chip A17 Bionic & thiết kế Titan cao cấp.</p>
+                                        <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="shop?category=iphone">Mua ngay</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item position-relative" style="height: 430px;">
+                                <img class="position-absolute w-100 h-100" src="data:image/jpeg;base64,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" style="object-fit: cover;">
+                                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                    <div class="p-3" style="max-width: 700px;">
+                                        <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Samsung Galaxy S24 Ultra</h1>
+                                        <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Camera 200MP, màn hình Dynamic AMOLED 2X, hỗ trợ bút S-Pen.</p>
+                                        <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="shop?category=samsung">Mua ngay</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item position-relative" style="height: 430px;">
+                                <img class="position-absolute w-100 h-100" src="data:image/jpeg;base64,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" style="object-fit: cover;">
+                                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                    <div class="p-3" style="max-width: 700px;">
+                                        <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Xiaomi 14 Pro</h1>
+                                        <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Hiệu năng vượt trội với Snapdragon 8 Gen 3 & sạc nhanh 120W.</p>
+                                        <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="shop?category=xiaomi">Mua ngay</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="carousel-item position-relative" style="height: 430px;">
-                            <img class="position-absolute w-100 h-100" src="img/carousel-2.jpg" style="object-fit: cover;">
-                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <div class="p-3" style="max-width: 700px;">
-                                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Women Fashion</h1>
-                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
-                                    <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="#">Shop Now</a>
+                    </div>
+                </div>
+
+                <!-- Offers Section -->
+                <div class="col-lg-4">
+                    <div class="product-offer mb-30" style="height: 200px;">
+                        <img class="img-fluid" src="data:image/jpeg;base64,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" alt="">
+                        <div class="offer-text">
+                            <h6 class="text-white text-uppercase">Giảm đến 15%</h6>
+                            <h3 class="text-white mb-3">iPhone Sale</h3>
+                            <a href="shop?category=iphone" class="btn btn-primary">Xem ngay</a>
+                        </div>
+                    </div>
+                    <div class="product-offer mb-30" style="height: 200px;">
+                        <img class="img-fluid" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAPEBUQEBIVDxUVDw8PEBAVEBUVFRUPFRUWFhYYFRUYHSggGRolHRUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKDg0OGhAQGi0fICUtLS0tLS8tLS0tLy0tLSsvLS4tLS0tLS0vLS0tLS0tLS0vLS0tLS0tLS0tLS0tLS0tLf/AABEIALEBHAMBEQACEQEDEQH/xAAcAAACAwEBAQEAAAAAAAAAAAACAwEEBQYABwj/xABQEAACAQMBBQMFDAcDCQkBAAABAgMABBESBQYTITEiQVEUMmFxkRUjQlJygZKhsbLB0Qc0U3OCs/AzYqIkJTVDRHSDk8IXVGO00tPh4vEW/8QAGwEAAwEBAQEBAAAAAAAAAAAAAAECAwQFBgf/xAA4EQACAQIEAwUHAwUAAgMAAAAAAQIDEQQSITETQVEFFGFxsRUiMlKBkdEGocEjMzTh8EKSJFNi/9oADAMBAAIRAxEAPwD5mHPifbXvnmkhz4n21SQrk6z4n207AEHPifbQInWfE+2mAQc+J9tOwgw58T7aZIQc+J9tFgCDnxPtosIIOfE+2qQgg58T7adhDFY+J9tVYQxWPifbTSJbGKx8T7atIljlY+J9tUkS2ORj4n21oiGx6MfE+2tIkNlmNj4n21rGxmxus+P11VkRqKdj4n21DsWmyu5PifbWTRaYh2PifbUM0QlmPifbWbRSYpmPifbUtFJi2Y+J9tQ0ULLHxPtpWRVwCx8T7amxSYsufE+2k0O4Jc+J9tIYJc+J9tKwAlz4n20DI1nxPtpDBLnxPtpDPIsjclDMfBQT9lZznCHxNLzNKdOc3aCb8lcXJqU4OoEdQcg+yhOMldailGUXaSsxZc+J9posIgUxnWW24sz2i3RngjMkEtzDAzMGeGPGrtY0hu0MLnvHpxg8TFTy2fQ04TtcXsHcm5vbSS8jeNVjMwEbFg7mNA7aAAR3469RVVMRGE8rFGk5K6A2DufPe2c17E8YSEyqY2LB3aOISkIAMEkHx7qdSvGnNRfMUablG5Z3g3FubIW+t4pDcSrCioWysjBcB8gY84UqeJjO9lsOVJxt4kbz7nSbPj4jTwzaZRBLGhYOkhTWOTAalxjmPEU6OIVR2s0TUpOCvcsbV3DubZblnkiYW0cEsmkv2lmJChcr1Gk5zRDFRk0kt/4CVFpN32Ct9wbp4rSUPHou2VUPb97LIzrxOz3hSOWeePGh4uCclbYFQk0n1B2PuXJOJme4ht0huzZF31EPcZwAMDkvMcz40TxKjaybur/QUaLd7u3I5+7tzFI8TEEo7xkqdSkqSCVPeOXWuqMsyTRjJWdgRVEhrVEjFpokatWhMalUiGPStESxyVaM2PU1aZIeqquKwLGpbHYS9Q2UhL1DLQl6zKQpqlloU1SygApJAAySQAPEnpUsdzq7TdGMr22kZ8ZOjGB44GCSB41hOvCKcpOyOVVK9SooUo3b5czM2hsgQMLcDLyE4kYeag5nl3HIxyry6860Z8eb9yKukubeh9HgXhq9Lu9Nf1ZNptrZJX06X5c+pkPYHGoMHXhs6soPPSwUgg4I84VvHHpvLKOV3Safim76XuTPs2SWaMsys2mlvZpNa2tuC+y5QASvMvoCZBPmls5zgdO+nHtKhKTSeiV7/WwpdlYmME3HVu1tL7Xv4Co9nzN5qE8lPVRyYZXGT34q547Dw+KXXry3Ip9nYmfww6c1z258yFsJSuvQcYJzkDkOROCc4oeNoKeTNr9Qj2fiXDOoafT0vcl9lTgEmM8gSe0vd176iPaOGk0lP9n+DSXZeLim3DbxXL6j9nxSqQjJ2WYdQDhiuRkZ7x6j6eoPLi50JpzjLVfw7P8Ac68DTxFOShKHuv8AZtXX3Rm3dyZTk8gBhR4D+vUPRXdRoRpRsjzq+IlXld/Qr1qYEChAfTNjb17Oi2X5LNJLNm1lRrKSDiAXRxpeGbpGmdRwScZBGCOfFOjUdXMtNd/A6VOOSzB3R3ys7O3sYHZiEa+a9IjbkZQ+jHxuqjlTrUJzlKS8LChUikkI3G3qs7G2WCVmYe6cszjhsQbRrUw5Ppzjs9aqvRnUlmXT97ip1ElZ9Qt8N7rW+SEAyZTacs7hVKN5JqIUo56OUC48D6qKFCcG/L9xVKkZJeYz9IG8tjeWixRSNdzLMGine3MckdvowUdyBrJbvAweWeYyTDUakJ3eiFWnGUbbl7enfOwuLa6MLyNLdw2cXAMJXhGFmJLSHst5x6Z6DxyJo4epGcbrRNjnVi4u3Mbu9v7aQLZxSFmjSyWO4HDbsXMTK0TL4jzxy8RSqYWcnJre+nkONeKsipu1vTYoLmO4dkV9qNfoTb8VZISR72U56SQOpHLPiKurQqPK49Lbkwqw1T63OK2zcpNczSxLoR55XjTAGlGYlRgchyxyFd1KLjBJ7nNNpttFZa0IDWqJGrTJYxapCY1aohjlq0yWOQ1aZDQ1TVJkh5ouIgmi4xbVLZSEtUMpCmqSkJapZaFtUMo9bMRIhUaiHQqPEgggVnUnGEHKTsluXClKtJU4bvRH0Sx2pGmptaqWiZCrMBoVu8g99eVGlDGUnJS0eyWy/wB9RzqVuy8RGHDu1u3vK/j000OO3g2wrzxtF2xEGAY9GZuvzdOddlXDRqUeC3pZL7B2fWnh67xDWrbduWt/yZR2iw5KqoAhRVAOBllYnmeZyorm9nU95Sbd7tvnZNW8tT1X2rU2hFRVmklfS7Tv53R47VbuRFy7O47WGLKVbOT0Oe6oXZkLWlNvRJbaWd19i32vO94witW3vq2rO/mA2025YVQFaJlXngCMkgdfSar2dDW8m21K765t2T7VqaJRSScWlrpl2Q/3SThkkZkMZi83oC2R2tWMD1Zrm9n1eKknaF77+Ftrb/Wx2e06XBbavUyuO3jfe+30uVm2o+c6V8+V+/rIuk9/hXT7Op5bXe0V/wCrucntSpmzZVvJ/wDsrMkbYcEMETVlWdsHLlQQuefLr3VEuzKbTi5O2tl0vvYuPa9WLUlFX0bevvWVlf8A0ZWK9E8tA1IyBQBNUBNABCgQQpiDFMRNMRIoEEKADFMQa1QgxTJGLTJGrVIQ1atEsatMljlNVcljFNUmSwwaLiINFwsA1S2NCmqSxTUmNCWqWWhbVI0RFMyHUvI4IBxnryrCvQhWhknqjow2IqUJ8Sm7MRISTk8yeZJ65q4xUVlirIiU5Tk5Sd2xZoBAmpGAaBgmgaINICDSGC1AwDSYwKkZAoAmmBNMAhTEEKBBimI9TEGKAJFBIYpoAxVCDFMkYtMQxTTJGqapCGKaq5LGqaZI1TTuSwwadxEmlcBbUhoUxpFCmNSykKapKFNSKFtSGgDSKFmkNAmpGAaBgmgCKQyKBgmkMA0mNAVIwRQMKmImmAx42XzlK+sEfbSTT2EeU1QgxTETTESKACFAghTEGKYg1piGLTJGKaYmGppiGqaq5I1TTuSMU07iGA0ybAzTBRz+aqjFy2N8PhqleVoIrG9XwP1fnV8GR3+yKvVAG6HgfqpcCQ/ZNXqgDOPA0uBIr2VV6oAyil3eQ/ZVXqgC1HdpB7Lq9UCaXdpD9mVOqAKml3WQ/ZlTqgTGaXdZj9m1OqIMRo7rPwH7NqdUWzsK64XH4Mgi06+KUYJp1Bc6sY6kVjkjnyZlfpzJ9nzvbMijwD6K17pPwK9nVOqBaBh6amWGnFXIqYKpCN9xRrmOQE0DFmpYwakYNAyaoQ2389flL9tRV+B+Q1ufV95doiBTLIxwsQJ582JYgAeJJI/oV4d7HSld2OW2Lt6C+dongVZFBbDIjgrnB5svUEjl6auNWa2bHOnYsWyWFzq4aRSaSA2nUmOuPNK5BweffitFiqq/8jOVJLdES7CtT8Bk+RKf+sNWqxtRdGS6UStJu9B8GSRPWEk+zTWix8ucSXRXUwLyDhSMmdWk4zjGR1HLu616FOeeKl1MJKzsAKskIUwDBpkm7Y7p7QmAZLaTSRkMwCAj+IisZYqlHeRaozfI2Lb9HO0W6rFH46phn2KDWbx9JdWUsNN9DUt/0W3B8+4iTxAR2/Ks32iuUS1hHzZoL+jKJMcS5kb0LGq/aTWftGb2iiu6RW7Zi707oLaR8aKRpFBwysBkcwORHrHt9FbYfHOc8s0Z1sKoxzROVVq9K5wtBh6LisIuF1H5q7KHwntdnTUaT8zoNo7qJDFYScUk3nC1AqPe9Yj6eONf1VyU8bKc6sbfBf62v+Dv4xqj9H0fldxbcdsQ20c4fQuWLauRGeQ5Vz+1JcKFTKvebX2t+Q4zK27mwrSOy907oNOoZ4vJlUYZyQqHVkHqavE4mtKv3alZPR3+l2Dqs1tjboLap5PPcW8d3dRDhrJbcZouR8wswUMTnmR1GBnFc1fHOs88IScIvWztfz0FKpdnv+zm3mkmigmaN4I4UcFSVa6ZC5wW56CCnTxNJdrVYKLnFNSu/pew+KznRuc7WlvKhYzT3kloYCAAjIZQSW9HCOfDn4V39/iqs4v4VHNf7fkfFLe0t0bG1DRz7RUTqhYxLCSNWnITOep5dSOvSsqWOxFVqUKXuvncXGZR3N3XTaDSiSUwLFGshITVkEnPf3YrfHYx4ZRyxvcON0Gbd3RWG2W9tbgXduWCs2goyEnA1Anx5dxGRyqcPjnOq6NWOWQcY6Tamx5V2GAWQ6be1maLhvrVC5IJk4nPAZuRGkaeQFefRrReP56tq+n4/wB+JOfW5gybkn3LG0Y5C7aDK8OkYEYYhiD6AM+oGu1do/8AynQkrK9r+JXGZn73burYTpCrmUNbRz6ioBBZnXGB8j663wWJeIg5NWs7BxjjZBgkek/bXFP4meNL4mLNQxCzUsoE0gBoKJBpiG2/nr8tftFRU+B+QLc+m732C3MZiY6QY8hvisrMQfUCK8Q6U7M5DdXYao7zNcJcnQ0PvbZABxkseuogfWetIucuRp7I3YGzmY8TiGREZea4EZ7Sg4Jy3Pn06dKEKcmy1eXWgDCs7MwVEUZYsTjkPn60zNtJNt2S5njFdH/Zz/zof/XV5JdDj9p4L/7F9n+DLvdh3Mjs/CbJIOkSweAHUyeiu2nipwio5djJ47BN34v7P8GVZWrzSNFHFIWjLCQHhqFKtpI1MwBOe4E01jpN6ROitwKUFOc7J7PqaS7uXJ5CJj/xIP8A3KVTtHhxc5qyXO5lRrYatNU6c80nskn+BsWyZbV0nngdoo5Y5JQDGx4asC3JWPLHzVxx7fw9b3IPV+f4PWl2RWgs7WiPpVl+kK2lv1sY0dtQGJ8gLrMYk06evQ9fGpvyJy8zsRLVWFYMSUrAVNpT4x8/4VUUDOb3plzZTZ+LMB69CYrSj/ej5oisv6cvJnygNX0B49idVFwsOiTIz6a7sP8AAdNGpljY+otvG9ra7NjhaJtccEc4btFFCxg9GGk826+FeAsGq1au5X0ba+7O91rRj4j22pbptadXlRVms4oll1DSHGeRboORPs9NSsPUlg4Sim3GTdvsPixVRpsxNqmOw2ZHZCaO4m8pWciNtShVfWM+HmqOfifCuuhGWKxUq2Vxja2vlYidVQja92am0Le1vry32kt3FHHGsTSxu4WRWicuox6ScHPhyzmuanKth6M8M6bbd7aaa6F54yakpaANvArx7QuYWCnjWrQAnBfhaADpPMg6Ty8DT7k4zo0prdO/1uLjpqUkX9qbftUSzukI0G740iAgsnFgmVyVHPIZyT6c1hRwlWU6lJ7qNl9GhyrRSUidlRwQ3FxP5VayW05eftOvEWckcsk40Y1+np4UVnUnThTySU46eFvW5Skrt3Vjl/0XlFNyrusZe2RF1sFBPaHf669LtlP+m0r2b/gxoVc17lqSGC3sE2UJ455Li6iMzRvlI04iFiW7sBB158ycVknUq4iWLyuMYp2vu9NCnUSSje7Okk2lYz3Vza6ipezW3dyycAxqGKhDnzhx29h8K4FQr06MK1tM1/G/j4aGnFg5OJjbO2slpa7PV2VlLT290moHEbkgkjwBCn1A+NdVTDuvVrOK10a/7yI4yio3MT9JuhryPhsHVbOFMhg3SSXlkd/MV29jKXBlm+b+ERXqpSSR8tn85vlN9tZz+JnNuKasxizSGDSGDSGSDTAsWC5lQHvdftrOq/cfkEVqj6Bv2krwOkPnGJcgdWUPqZR6SBj09O+vGZ0waTOJ3LhmE7yBGReEynUCFL5BVefM45+r56RpUasae7TXeqXyjWF7OnWQTxOerT/d+rpTRE8vI3LY5uYf+P8AyXqofEjzu0/8Kp5L1Ru11nwp6gAVjUEkKqliC7BQCxAwCxHX56SSRpKrOUVGTbS28DT2dDnTjGXYKCe4Zx9tfI9u15VcRHDR2Vvu/wAH6P8Ao7A06WFli5K7d15JfllXb0TRl0JBwhzjOOa57/XXlqlwqqi3s0fc05xqUXJLkz5/ujj3bj54PG83PX3g8/68a+3W58W9j70rVoZjlNIZT2r8H+L8KaAwN5f1Gb5E/wDLSro/3o+aIrf25eTPkwavoLnkBaqLhYZBcFe7I8K1p1XALD/LV+L9db97XQVmR5evxT7aO9roGVke6C/F+ul3tdAysg7RX4p9tHe10DKyPdNfiH20u+LoPI+pHuovxD7RR3xdB5H1IO1V+IfaKO+LoHDfUg7XX4h9oo74ugcN9SPdhfiH2ijvq6D4b6ke7C/EPtFHfV0DhPqe92V+IfaPypd9XQOE+om42zkYRdJ+MT09QqKmNbVooqNKz1ZkE1wXNwCaQwDSGgc0gBpFEg0xFnZrYmjzy98X7ait/bfkOO53++G0fJ42kA1MI1VB3a2k0gn0DJPzCvGOiKu7HI7s7cmllaKVuINDOrEAEEEZHIdDmkipwSV0dIz0zMnZ7ZuYv+N/Jerh8SOHtT/CqeS9UdBXUfCnqAPUAXrR+yMcip+cc8g/14V8d25h5QxPE5SS+6P1T9G4uFXAuhzg3p4PX/RW2mewxJ+C32V5cPjV+qPs3pB26Mxd0N05TeRX2qPh9qQLqPEyFMRBXHTI65r7lbnwzeh9USruQPSkFyrtP4P8X4UXHc5/ecf5DN8if+WlaUP7sfNCrf235M+Raq9+55JZ2fZTXL8KBGlcgsEXrgdTUzqRgrydhxg5OyVyzBsO7kVGSB2EsjxREAduRAxZR6Rw3+ial1qavd7FKlN7IVFsq4fhaYmbjmQQYA98MZw+n1d9DqwV7vbcXDlppuL9z5zN5OInM2opwQpL6h1GB7afEjlzX0DJK+W2o9dgXjSvALeQyRprkj09pUOME+0VDr07KV9GUqU72tqV4tlXDxpMkTtHJKsEbgcmmY4Cj0k8qbqwTcW9VqChJq6Q1N3b1nkjW2lZoscYBM6MjUAT0zgg4qXXp2TzLUpUp66FdtkXIBPCbAthek8uVoekvXzafFh152+ocOXQ9e7DuoeJxYHj4SxvLkDsJI2lCefQkEfNSjVhK1nuN05LdHrvYF5EqPLbyxrI6xxlkK6pG81QDzBOD1oVaDbSewOnJbosy7m7SUqDaSgs2lRgc20lsdfBWPzVHeaXzF8GfQXs3dm4lvVspUkt3PabMJdlTHn6MjUvpB9vSideKhnWoRpNyysy4rGWSbgRRvLJrZBGqEsSpIPZ6jGOfhVOaUczdkJRd7Gha7p30l0tnwHSUqHIcEKkZJGt2GcJyPP5uvKs3Xgo5r6FqnK9rCYd176QyiK2ll4MjRSlY25OvPGlgG6EHGM4I5UnWgrXe4+HLoYrVpciwBqSgaABqSic0xF/ZFssjjU2jBBXpzI54AJGehrnr1cvu9Sowb1O+28qudLAMrIQR3EEtXmmnMwbDZkNvkxLgnkWJJOPDJ7qBuTe5YZ6BF/deES30CHmCbjv8LeU/hSk2ldD4MK0XTqK6e51m0tn8PmucZIx6aqliLu0j5/tPsFU4Orh72W8fwZ1dh8seoAKNypyKxxGHp14OE1oduAx9bBVlWouzX2a6Mr7SVpFbBx2T19XorwH2FKM80Zpr9z9AofrmjUgoVKTUnpo01r52Z025qjyKI456ZBnHPHEevYFLc6CNTRcSRYRDRcdiptH4Pz/AIUmxHP71fqM/wAif+Wla4Z/1Y+aCr/bfkz47mvoTyjo9xdrJZ3Es7sFK2NzwgfhT9jQg9Jwa5sVTdSCiuqNqE1CTb6HcTb37PWSLRKOFBtLiIArZMUttKHcLjOBJOwPf2e+uFYarZ3WrXo1+DqdaF1Z7My7PathbCBDcibyS02mVkjUqXnuXXQsWsYLBNfXkCR6a0lTqzv7tszX7dSYzpxtre1/3KV3tmH3XW9triKMS2yPI0ysyCQx6HilCDIJ0rzHQn5q0VOXAySi9Hy9UQ5x4uaL5Gtszb+yrKaWWGRsS3NnFpQk6UjGp3HEGeBlsePZ5DGKxnSrTik1sn/3maRqUottPf8A77A2m8thZ2pgSVJeGdo3UAXJ9/S41Wq9ORZW9XLrSlRq1JZrW2X7ajVWnFWv1JudvWMk93x7mF7WWSOXhhZRPxRbRoJIHQYzkFSD8U9x5ipVEo5Yu6+273DiQbd2rf6Mm725ZmyeQTgyvsFNki10NxBOMgsTjTo55z/+VoqU+IlbTNe4lVgle/JI3tsb7WD+UsWWQx3Oz+Fp6z2qTQTHTkcyjcfl+dYQw1RZfr9HqvwXKtB3+hy++l1YSwSzR3IubiS940TB5wy2zaiFeNuwhQEKOWcD04rpoKopJNWVvDcyquDV73Zf2XvJbLc2DSTqUj2OYZ8s2BcaGGlv73PGfTWU6UnGVl/5fsaRqRuteQ2Leewhla9Ehwuydn2ttbREGaP3wmWIF+pTSpLMeYY1LpVGslubbfIpTgtb8jNh2tZRbT2jw7gRR3dvKlveoGYRSzBXbIHaA1k8x00jp1FuE3TjdbbohSipvxLN3f7M4dxY2t0lmZ7SwY3Ye4kj8pilkaWPiN2wukpjoO0e/IMqNS6nJXs3poWpQWiZe2j+kCyRZ54lFxIt9bNArO8TSmO3WPjsAMlcgjScZAHSs1h5tpPTT/kN1Yq7Pkd1cNLI8jY1O7yNgYGp2LHA8Mk13pWVkczd3cQTQMjNK4Cwam5QQNVcRYgOGQ/+KrfMuMffPsrgn71Z+CN9qZ9A2q/aX5A+01ykmaz0AKZ6ANvcMk7StwOuq4A5Z6203pFKWxrSPqW1LVWU4A5jlkHmMnvPfWEkdMWcXeQ6GI7snFd9Cpnjruj4DtnA91xDyr3Zar+V9BFbHkFq2sHk5gYHia8vF9r4fDvLfNLov5fI97s39PYrGpT+CPV/wuZZn2TiNiT8Bj9VeHPt2vUmlG0V9z7DDfpXA0Vmm5Ta8bL7L8mlur+pw/u/xNfQsTWptIaVwsPQ0gsVtofB+f8ACk2NI5/ev9Qn/dz/AMtK6ML/AHI+aJq/A/JnxrNfQHlns0wPZoA9mgCM0gIJoGDmkBBai47AFqVx2BLUrjsDmlcYJNK47Ak0rjIzSAEmgYJNIYBNIYJapuOwGaVx2AzUXKCBqrisWI/PjHyP8TavsK1xUtc8japokjvNrt2x8n/qauYgzWegBTNQBv8A6Pj/AJyt/lT/APlpqUtjWlufYLkDSccj1PL0DHp5cvZWLOhHK7Tt9We488esUUqmSdzj7TwSxeHcOa1Xn/sr7Os185+fgvd89eD2125Jt0MO7dZfwvyc/YX6YyJYjFLXdR6eL8fA1RKK+SvI+0yWQ64VTC5zz0Pyx3aT31tScLweb3sy08OtznqNq68Crur+pw/uh9pr9JlueFY2kpDyjkoDKVto/B+f8KiRpCNzn96z/m+f93cfykrown9yPmjLEK0X5Hy/Ye7dzextJDw9KyLES8yx5lYdlV1dScivbqYiMHZnmRpSkrodY7n382sLEEMcpgIkkSMtOBnhpqPabHPly9NKWJpxtqNUZvkWrjcO+V41XhSiWeS2SRJcrxow+tWOOzgxyLz71IqVi6bTvfTUp4eaMrY2wbm81tCqhI8cWaSRY40J6Aux6+gVpOvGFr8yI0pS2Hx7sXJaHKqwmu3tE0SqSZI30yYPMAcjhuY5ZqXiI6+CuNUZaFi/3Qn8ovIrdWdbRVlcO68QxMmtSNIw5wD0qY4mOWLlzKdF3aXIp/8A8tdmZoAEMi2nlpXiDnBgN2fFsEcqfeIZc3K9hcKV7FzYu5NxcuiHCGWxN9Bgq2UJVYxJkjQGLek8jyODUVMTGP0di40GzJ2RsG5vBMYE1G3jMsqE4bSNXJR8JuyeVXOtGFr8yY03K9uQ693Vu4YmmcJoRbV2IkBOm5OIuWPb4VKxEZOy8f2K4Uhse5V801zAqIXtVRpxxBjtoXUIfhEqDy9FS8RBJPqPhSu10F2e517MltIiKVuzKsDGQAao0dyH+KdMbkeOKJV4JtPkCpSYhN17pmCgJk7N91h2/wDY/H5X92m60bfW31DhSF2G7d1PbNdqEjhXXiSWVIw7ICWWMMcsRg+w+FEqsYyy8wjTbVxt1uheRtOrKpNvDDPMFfJ4cvmaQB2j6KlV4O3iVwpF66/R5eokBwGklmEMkQKYt5G5xrM4ckMwIONOBkc8kCo7xFt/9crgvQy7nc6/QleFqfy07PEasCxueEJuQ6aNBDas4x4U+PB/a4cJlTeDd+ewKrOYiX1jEc6SlWTTqV9J7J7Q6+nwpRqKewODRj1RNiKQwl68ufhUzlaLY4q7LCf24x04qKPUGCj6gKxoq1Jl1PiO3222JPmP3mrkJMxmoAWzUAdD+jw/5xgzz7U/h/3abxpS2NaW59N2ltQ50pyGT2u89By8KwbOpI5y5y5x5xJB8eY6H6utY1asaUXObskdFODk7INHKjHgK+JrzVWpKfVn0dOmowUdyGuCKyypmmREja5AKY1FlYcvVV08LecZdGvU5MTTp5Wam636nD+7/E1+kWR8i27mylFkGZj0oyoMzK20vg/xfhRlQOclszA3p/0dc/uJz8+lauikqkfMmTcou5wm6W8tpDYS2l0zpquo5hw7dZGZFC6gGYjSxIwGzle6u6tSnKopR6dTCnOKjZmncb9WV66vdrNAYNoC+gESq/ERQNKPkjS+VGT059ahUJw+GzurMt1Yy363Lmyf0m26vDxlYIX2jLcIEzw5JLnjWxU/CwpZTj41RPCy1t4W+2pSrROa3V3is47drS8DBfLkvo3ESyozBQhjmiJGVIGR6T6Oe9WnNtSj0sZQlFJp9bnQR777MRo3jR0EEu0J4IFh0LrlUpGvZ5KCGbn3cqx4FXW/OxpxILbxEnf+1j13EAdJntNmxGEhmXiW8xaRTIebAxtp1Hriju837r2u/wBw40d0Z97vhbDbUV9AG8nWOKB1K4bhcMxuNPfgNn5quNGXBcHuQ6i4mZbGhFv5ZQzTzIjygvs23tYzqj02drh9RYd+ssdPfgA8iaju82kvO/mzTixMzZ291vZXW0J7YseO8UtoChGSJuK6P8VebL6qudKU4wT5bkKok2zX2t+kGzAuDarkuuzkhjltwyBIWbWCp5clPL0gVlHDS0zeJbqx5Dk/SHs+G5lnRZJuPtGKZyQ0fDtltkgzj/WEHiHSfjeiju82knyX8j40Rewt/wCwtOBANbQRxXSg8I6kk4r8BlGe+KR1PyhSnQnK75/9cFVitDPtt/bdYVtyBoG7wsTJwPffLtOnTxOvCxz8M86p0G3f/wDV/oHEj+xz8217K62ZDaXLTQTWi3QgZIw8colOoBhkFSCFGfDPjy1tKM3KOzITTik+R1W0P0m25Nzw1BBgsvJjwNLvNEwZ1lfrp7IxnxNc6oS0NeIhcG/uzYZ5JovKCby9s7q6DxqBAkBDlU0kmRiw7uWD6OY6U2rPkGdB/wDajbAWshjd5Yr6Z5wEwXtzDLAkisTjiaGiyD8U9KngS1DiI4/e/aGzXtraCxUs0Rl41w1skMkiHGgSMvORxzy3f1762pqabciZtcjk81qZkUhjrXzgfDtfR7X2A1jiH7hdNanrP+0T94n3hVJWp28CZas7jbze+n+L77VwgZbNQAtmoA2N0Zil1Gw7jL7DBKD9Rp5c2hliMQ8PRlVSva3qjuZb4HoD0/rpQsN1Z5U/1Mrf06evi/wbr2wijAA7Wkaj3lu/n4eivzfF4yeJrybfupuy8D7zAxkoRz72V/Mw5eppcj24FGZmYhF5knArqw9HPJLbxeyMcZiVQpub1tyW78F4s0obIQROzecY3HqGDW+IxVJyjQw/w3V5c5O/oeFhaGIrSeJxWjs8seUV/Mnzf0RpbrfqcH7v8TX3SPJe5spTEOSkNFfaQ83+L8KaCRz29n+jbn/d7j7q1UPjj5it7rPg+uvTzHLY9rouFj2ui4WPa6Ljse10XFYjXRcdj2ulcLEa6LhY9xKLjykcSlmDKRxKWYLEa6Mw7EF6WYLAl6Vx2BLUrjsezRcCDQBFIZ6gD1ADYuSsfRp9pH4aq5q+rUTWnomz1n/aJ+8T7wrefwsyO02+3vx/i++1eeMymagAGagDW3VP+UJ65P5MtXD4kcXan+FU+nqjtIpVDLqIA1LnmOma66uHrSpSyxez9D4zDRfFg2tLr1O5uY8ivxeDsfsdOVjMlsVJyRXQqjOyNaQsRJHkqoB7zjn7arNKWjY/em9TN2lNlGH91vsrqw8ffj5o0krQfkae6/6nB+7/ABNfpKPj3ubKUwHpSGivtL4Pz/hTQmc5vh/oy6/3a5+6tVH415jS0PgGuu/Mc9hsEMknmIz464UnHrNXCM5/CribjHdjvc64/ZP9GtOBW+V/YniQ6o97nXH7J/o0d3rfK/sHEh1R73NuP2T/AEaXd63ysOJDqiPc24/ZP9Gju9b5WHEh1R73NuP2T/Rpd3rfKw4kOqPe5tx+yf6NHd63ysOLT6oj3MuP2T/Ro7tW+Vj4tPqiPcy4/ZP9Gl3at8rDi0+qPe5lx+yf6NHdq3ysOLT6oj3LuP2T/Ro7tW+V/YOLT6o97l3H7F/o0d2rfK/sHFp9UR7l3H7F/o0d2rfK/sPi0+qPe5dx+xf6NLu1b5H9g4tPqj3uVcfsX+jR3at8r+wcWn8yK80LxnDqUPgwI9lZzhKDtJWLTUtmBmpGezQIjNIY48o/W33R/wDf6q5nrWNdoEWZ99T95H94VvP4WZnY7fPvx9bffauARlk0AKJPooA0tgEiQfKb+VJXb2f/AJEPr6M58b/jT+nqjemfIr6g+bSPpG7G21ubcNyZ1AjmU/HHf8/Uev0V+KdrYSXZOPqRyKUJaq+1m7/dbH3+Brd5oxlfVb+Y65fme70V4cmpSbStfl0PXpx0Mq6mraETsirIzbk9hvkt9hrqpfHHzQp/Czc3X/U4P3f4mv0VHxz3NlKAHpQNCNo/B+f8KaA5vfL/AEZdf7tc/cWqXxIa2Pz2Qa7LMxuj6FsKxZ+Fbwrlm0qo6ZYjJJPtOa+ji4UKGZ6JK7OKVJzka21djtboXM9tNh+G6RT63V+fIrgeBqaGLVWVlGS56rQUsNl1ugb/AGLPBbxXTheHNjRgksMgsuoY5ZAJHM06WMp1KsqUd1/2gPDNJSI2jsae3jglcBluEV4ihLecAwUjAw2COXPvp0sZTqynFaOO9/Dn5BLDSST6mhLujdI5SQxRhYFuJJHlxHGjEqA7Y5NlW5DPTrWC7TouOaKb1slbV+RXdJXsVl2BK0jRpLBLptnui8c2tDEpwcEDzvQQKvv0FFSlGS1tZrW4u6u9tBWy9izXMfFjKBfKI7btMQeI+MdFPZ7Q5/VV18ZCjLLK+zf0Qo4ZyV0H7gXAnmtzpV4IZJ5MscGNADlDjnkMMdPmpd+pcONRXak7Lz8Q7tK7XQZabuzPEkzywWyyf2PHm4ZkHioweX9d9TUx8IzcFGUmt7K9hrCtq+iKmz9lS3EzQRlMoJGkcuBGqIcMxf4vpHjWtXFQp01UlfXZW118BRwzbsXY925XlSGKe2mMiyMrxz6kAjALaiFyp5+FYvtCEYOcoyVraNa6/UfdHeyaIg3dkkkSKK4tZmk14EdwXwFUsS2F5DA9tEsfGMXOUJJLqrfyCwrbsmiG3bn96KSQTJNKIEmim1xiU8wrkDI5eij2hTtK6aaV7NWdvAO6y02Cj3bl0NI81tCq3EttmWYpmWMkMF7PMcjik+0IXUVGTdk9FfR/UO6u17oiHdyRlMhntY4+IYo5XuMJK468NtPaHp5dDRLtCCeVRk3a7SWq8wWFfVHLb02oEcqPpZoycMpDDUp56W7weYp4vLVw7nbldX3KpU3CZw2a8A7Cc0ARmgY+65BR4L+JP2aa5qOsmzSWyQNl/ax/vY/vCtpbMzOx2/8A2x9bffauEky2oAA0AaWwv7QfKP8ALkrrwLtiI/X0Zhi9cPP6eqNuX86+lzngRiUo9oTWsnFgbScYYHmrrnow7x9Y7q8ntLAUMbS4daN1y6ryZ6uCxE6Es0Gb9v8ApFhYYnjaJu8r21/P6q+AxP6VrU5f0ZKS8dH+D6vD9r0WvfTi/ujYS9SVRIp1Kyh1PPmpGRWEOwMXezSX1McR+quz6LcW22uWV/yKuJsq2B8E/ZXq4b9PwpvNVldrktEfP4r9ZVKslTw8Mqbtd6v7bep0O6/6nB+7/E17S2PRlubKUCHpTGhG0Pg/P+FOIznd8h/my6/3e5+6tVH415hyPz8Urusc1zutgzSCaExSJA4ZdErsFRWx1ZjyA7vnxX0FTK6DU05K2y3OlUuZ3W0dnJcxjytbW3unuYVjkgmUcWIsOM7qCRyTU2o9SAOWcHyKWIlSk+C5Sgk7prZ8v3G6afIbebWsr7yy0ieVWMYMHF4SwB7XsqIWB1dv+93Z6dKmnRrYfh1pJWvra9/e6+RTp3RUud7hax2yaFuF9yrGSNSQRDeoraXI7iOWR15CtIYHjSnK+V55J+MXyHkZan2hcySW7W81vIzbKtRcQ3EiYmJLllKnqwJJPMY1ems406UYzVSMklN2aW2wsrIjksre8VAYbWS42fcQXCJKGghuX0aBq6LnDcu7C+PMlx6lFt3koyTTa1a1uJU0tUL2GosIobe4ki4su1LeUIkqvphTTl3I5AZX6x6cViZ95nKpBPKoNXa5hGnZFmy21BceXcV1E8MG0beJywHGtXdigz8IqVAHoYdc1nUoTpcLKvdk4t+Euf3G4FeNI757S5TyeaNLWC1ureaUIYdLdtwuRnkTjxx7NHKWHjUpvNFuTkmlv0QnT11MSxmdNpTCwlgjAaZYxJIoikh1AcME8mzyI5/B612VcssLDjqT2vbdPqJUrO6Op2atrFd27stva3LR3QngilUwhNJ0scHCE8uWe89cV5ladWdGUU5SgmrNrUappa2KWw4mh2hbSTR2dqum4T/J5VwSYmPb7Rx0wD6a2r1FPDzjGUpPTdePIFT1vYDY+07eSKyNtwrNF2hG13amQl+KRhHV3OWTSD7PQaMRSqRlU4t5tx92XK19dh8O2xaWTi20ixpaXLe61++i4kUKELvh17Q65HzGs75KsXKUo+5H4V4LQTgUNiRXQVoHWxuYPKHMls86ZgyclkOcqMHkef11viJ0W1Ui5xlbSSW/mJU7KxxG+4t0kuUtW1wjIiYNqGNIzhu8BtQB7wBXa5VJYNur8VtROlbU+f5rwTM9QAQz1pS+FgtxtwuWPo5ezkPqArOhH3blVJah2Sjip+8j+8K1kvdZnc67bw9+Prb77VwAZwhY9AT6gaAINu3hj1kD7admBe2Qul15jzz0YH/Vv4V1YNWrxv4+jMcT/Yn9PVGxI9fQM8SKM27asps6KZi3cQJrhqK7OlSsdhuTOTbmM/6uQhfkN2h/i11zSVmfP9sQXEjPqvQ3ZjhWPgrEn0AZNRLY83Dq9WKXVep0O7F3GLSFdagiPBUsAQcnurmS0P0eW5uxOD0OaBFhDQMTtA+b8/4VURnM77XCps+dSebQTAD5RRF/xcquCvOIpO0WfDBDXp5DizGlBc9kBuWBivUo4qOVKWjR6VHFU8tp6MPyhP6BrbvVPr6m3eaHzep7ylfH6jR3ql1DvND5vU95Uvj9Ro7zS6h3mh83qe8pTx+o0d6pdfUO8UPm9T3laeP1GjvVLr6h3ih83qR5Wnj9R/KjvdL5vUfeKHzep7yxPH6j+VLvdL5vUO8Ufm9SDex+P1H8qO90fm9Q49H5vU8b6P431H8qO+Ufm9Q49HqR5dH8b6j+VHfKPzeo+PR+Yjy+L43+E/lR32j83qHHo/MSdoR/G+o/lS77R+b1DjUepHuhF8b/AAn8qO+0fm9Q41HqR7oRfG/wn8qO+0fm9Q41HqVdobRDLoTnnqenL0Vx4vGRlHJDW5hXrwayxMvFeUcYOgUrId2EaJarUS3PURStoD3CjHMd3McxTewjcvdqTu3akY8uuo5PPvPeawyroMqtOx6sT89KwAE0WAhmOgqGKZKsHHVWU5BGKmUW9UVBrZheVz/9+H/L/wDiq4+I+YXAofKgGeU9b1T/AAH8qTq4h8x8KiuQsxOf9rX6B/KpbrPmPh0ehasrq4gzwr0Jqxq97BzjOOo9JpONVmVTDYap8cUx017dTjhy32pGIDqE06l7wSoGR6KOFUejJp4XC0pZoQSZ3UCAKozq7I5+PprrjCysOUru5YUkdCR6jVZELMxi7RmTzZXH8Zo4UXyDOyZdv3OADJq6+cAfwo7vEfFZz+8lxcTJ23ymQzIBjJBIBJ6nGenQZyOprWjShGW2pnUnJo50RV2ZTDMTwqeUWYEw0sg8x7g0soZiOFRlDMe4NPIGYEw1OQeYEwUZB5gGgqXAeYBoalwHmFtFU5SlIWYqnKUpAGOpsUmAVpWHcErU2GRilYCMUhkYoAikM9ihrQEwmHP6/bzqYbDkFF1HrFW9iS9P539eJrKwAillAmjKK42KEP2W6Fhn1AE4+qtKdNSkkyZTyxbRZ8ii/Zr7K7eDT6HLxqnUW9nH8Qeyk6MOg1Vn1FNaoPgiodKPQriS6mjsmxiYMWjVuYAyPAc/tFS4I5MTXqRsosuT7MgKkBApwcMowQe40ZEY08VVzK7ubuzW96T5NSkeq2WS9VYVxUj1aRLZWkarSFcG7wYW+S32Ckl7yBvRnP6a67GFz2mgVz2mgdzxWgLkaaQXBK0BcErSGRigdwStJoASlTYq4spUtDuLZKmxSYto6lopMWyVLRVxbJUtFXFlamw7gEVNhkYpWHcikMgCgAjSirDbCQc6uxJZY5NLKK5KimoE3DC1WQWYsQDB/rwNaQjqZyehZDV0GFiGpjR4W7HurOTRaTZftxoUD2+uovE56lCUncaZOXzVaSexjwnFq6LdrPhFHopZDuchvlBqlAWYgzGqUCc4JeqyCzhSHMZHob7KWTVDz6Gbwa6MphmPcGjKGY9wqMo8xHCpZQzEGKllHcEx0rBcApSsO4JSiw7glKVh3AKUrDuCVpWHcApSsO4DJUOJVxTJUtFJi2jqbFJiWSpaKTFslS0UmLIqWigcVNhg0hhChCCWrEPFNEsYtUiGNWqEx0dXHciWw5a2Mw16j10PYFuWq5kahCgAquG5M9h8PQeqtjNjKpEkirRLCpkjT5p9Rpc0PkVq3MyaQiKBgtSGAaQAGkygGqBgNSGA1IoA0mCANIYJpFIBqQ0LapYxRqGWhT1JSFNUsoU1QUgKRR//2Q==" alt="">
+                        <div class="offer-text">
+                            <h6 class="text-white text-uppercase">Trả góp 0%</h6>
+                            <h3 class="text-white mb-3">Samsung Galaxy</h3>
+                            <a href="shop?category=samsung" class="btn btn-primary">Xem ngay</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Carousel End -->
+
+
+
+        <!-- Featured Start -->
+        <div class="container-fluid pt-5">
+            <div class="row px-xl-5 pb-3">
+                <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                    <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                        <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
+                        <h5 class="font-weight-semi-bold m-0">Quality Product</h5>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                    <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                        <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
+                        <h5 class="font-weight-semi-bold m-0">Free Shipping</h5>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                    <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                        <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
+                        <h5 class="font-weight-semi-bold m-0">14-Day Return</h5>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                    <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                        <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
+                        <h5 class="font-weight-semi-bold m-0">24/7 Support</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Featured End -->
+
+
+        <!-- Categories Start -->
+        <div class="container-fluid pt-5">
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Categories</span></h2>
+            <div class="row px-xl-5 pb-3">
+
+
+                <c:forEach var="category" items="${listCategories}">
+
+
+                    <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                        <a class="text-decoration-none" href="">
+                            <div class="cat-item d-flex align-items-center mb-4">
+                                <div class="overflow-hidden" style="width: 100px; height: 100px;">
+                                </div>
+                                <div class="flex-fill pl-3">
+                                    <h6>${category.categoryName}</h6>
+                                    <small class="text-body">100 Products</small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </c:forEach>
+
+
+
+
+            </div>
+        </div>
+        <!-- Categories End -->
+
+
+        <!-- Products Start -->
+        <div class="container-fluid pt-5 pb-3">
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
+            <div class="row px-xl-5">
+
+
+                <c:forEach items="${listTop8Product}" var="listProduct">
+                    <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                        <div class="product-item bg-light mb-4">
+                            <div class="product-img position-relative overflow-hidden">
+                                <img class="img-fluid w-100" src="${listProduct.productImage}" alt="">
+                                <div class="product-action">
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                                </div>
+                            </div>
+                            <div class="text-center py-4">
+                                <a class="h6 text-decoration-none text-truncate" href="">${listProduct.name}</a>
+                                <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <h5>${listProduct.price} VND</h5><h6 class="text-muted ml-2"></h6>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center mb-1">
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small>(99)</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="carousel-item position-relative" style="height: 430px;">
-                            <img class="position-absolute w-100 h-100" src="img/carousel-3.jpg" style="object-fit: cover;">
-                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <div class="p-3" style="max-width: 700px;">
-                                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Kids Fashion</h1>
-                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
-                                    <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="#">Shop Now</a>
+                    </div>
+                </c:forEach>
+
+
+
+
+
+
+
+            </div>
+        </div>
+        <!-- Products End -->
+
+
+        <!-- Offer Start -->
+        <div class="container-fluid pt-5 pb-3">
+            <div class="row px-xl-5">
+                <div class="col-md-6">
+                    <div class="product-offer mb-30" style="height: 300px;">
+                        <img class="img-fluid" src="data:image/jpeg;base64,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" alt="iPhone 15 Pro">
+                        <div class="offer-text">
+                            <h6 class="text-white text-uppercase">Giảm ngay 10%</h6>
+                            <h3 class="text-white mb-3">iPhone 15 Pro Max</h3>
+                            <a href="shop.html" class="btn btn-primary">Mua ngay</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="product-offer mb-30" style="height: 300px;">
+                        <img class="img-fluid" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjcaHv9JylJFqFZ9EX1Mx_AhngzSXMAIDicQ&s" alt="Samsung Galaxy S24">
+                        <div class="offer-text">
+                            <h6 class="text-white text-uppercase">Ưu đãi đặc biệt</h6>
+                            <h3 class="text-white mb-3">Samsung Galaxy S24 Ultra</h3>
+                            <a href="shop.html" class="btn btn-primary">Xem ngay</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Offer End -->
+
+
+
+        <!-- Products Start -->
+        <div class="container-fluid pt-5 pb-3">
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Recent Products</span></h2>
+            <div class="row px-xl-5">
+                  <c:forEach items="${listTop8NewProduct}" var="listProduct">
+                    <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                        <div class="product-item bg-light mb-4">
+                            <div class="product-img position-relative overflow-hidden">
+                                <img class="img-fluid w-100" src="${listProduct.productImage}" alt="">
+                                <div class="product-action">
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                                </div>
+                            </div>
+                            <div class="text-center py-4">
+                                <a class="h6 text-decoration-none text-truncate" href="">${listProduct.name}</a>
+                                <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <h5>${listProduct.price} VND</h5><h6 class="text-muted ml-2"></h6>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center mb-1">
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small>(99)</small>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="product-offer mb-30" style="height: 200px;">
-                    <img class="img-fluid" src="img/offer-1.jpg" alt="">
-                    <div class="offer-text">
-                        <h6 class="text-white text-uppercase">Save 20%</h6>
-                        <h3 class="text-white mb-3">Special Offer</h3>
-                        <a href="" class="btn btn-primary">Shop Now</a>
-                    </div>
-                </div>
-                <div class="product-offer mb-30" style="height: 200px;">
-                    <img class="img-fluid" src="img/offer-2.jpg" alt="">
-                    <div class="offer-text">
-                        <h6 class="text-white text-uppercase">Save 20%</h6>
-                        <h3 class="text-white mb-3">Special Offer</h3>
-                        <a href="" class="btn btn-primary">Shop Now</a>
-                    </div>
-                </div>
+                </c:forEach>
+
             </div>
         </div>
-    </div>
-    <!-- Carousel End -->
+        <!-- Products End -->
 
 
-    <!-- Featured Start -->
-    <div class="container-fluid pt-5">
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
-                    <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Quality Product</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
-                    <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Free Shipping</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
-                    <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">14-Day Return</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
-                    <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">24/7 Support</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Featured End -->
+      
+
+               <c:import url="./footer.jsp" />
 
 
-    <!-- Categories Start -->
-    <div class="container-fluid pt-5">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Categories</span></h2>
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="img/cat-1.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="img/cat-2.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="img/cat-3.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="img/cat-4.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="img/cat-4.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="img/cat-3.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="img/cat-2.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="img/cat-1.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="img/cat-2.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="img/cat-1.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="img/cat-4.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="img/cat-3.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-    <!-- Categories End -->
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 
-    <!-- Products Start -->
-    <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
-        <div class="row px-xl-5">
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-2.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star-half-alt text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-3.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star-half-alt text-primary mr-1"></small>
-                            <small class="far fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-4.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="far fa-star text-primary mr-1"></small>
-                            <small class="far fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-5.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-6.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star-half-alt text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-7.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star-half-alt text-primary mr-1"></small>
-                            <small class="far fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-8.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="far fa-star text-primary mr-1"></small>
-                            <small class="far fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Products End -->
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
+        <!-- Contact Javascript File -->
+        <script src="mail/jqBootstrapValidation.min.js"></script>
+        <script src="mail/contact.js"></script>
 
-    <!-- Offer Start -->
-    <div class="container-fluid pt-5 pb-3">
-        <div class="row px-xl-5">
-            <div class="col-md-6">
-                <div class="product-offer mb-30" style="height: 300px;">
-                    <img class="img-fluid" src="img/offer-1.jpg" alt="">
-                    <div class="offer-text">
-                        <h6 class="text-white text-uppercase">Save 20%</h6>
-                        <h3 class="text-white mb-3">Special Offer</h3>
-                        <a href="" class="btn btn-primary">Shop Now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="product-offer mb-30" style="height: 300px;">
-                    <img class="img-fluid" src="img/offer-2.jpg" alt="">
-                    <div class="offer-text">
-                        <h6 class="text-white text-uppercase">Save 20%</h6>
-                        <h3 class="text-white mb-3">Special Offer</h3>
-                        <a href="" class="btn btn-primary">Shop Now</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Offer End -->
-
-
-    <!-- Products Start -->
-    <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Recent Products</span></h2>
-        <div class="row px-xl-5">
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-2.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star-half-alt text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-3.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star-half-alt text-primary mr-1"></small>
-                            <small class="far fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-4.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="far fa-star text-primary mr-1"></small>
-                            <small class="far fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-5.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-6.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star-half-alt text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-7.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star-half-alt text-primary mr-1"></small>
-                            <small class="far fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-8.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="far fa-star text-primary mr-1"></small>
-                            <small class="far fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Products End -->
-
-
-    <!-- Vendor Start -->
-    <div class="container-fluid py-5">
-        <div class="row px-xl-5">
-            <div class="col">
-                <div class="owl-carousel vendor-carousel">
-                    <div class="bg-light p-4">
-                        <img src="img/vendor-1.jpg" alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src="img/vendor-2.jpg" alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src="img/vendor-3.jpg" alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src="img/vendor-4.jpg" alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src="img/vendor-5.jpg" alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src="img/vendor-6.jpg" alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src="img/vendor-7.jpg" alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src="img/vendor-8.jpg" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Vendor End -->
-
-
-    <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-secondary mt-5 pt-5">
-        <div class="row px-xl-5 pt-5">
-            <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-                <h5 class="text-secondary text-uppercase mb-4">Get In Touch</h5>
-                <p class="mb-4">No dolore ipsum accusam no lorem. Invidunt sed clita kasd clita et et dolor sed dolor. Rebum tempor no vero est magna amet no</p>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
-            </div>
-            <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-4 mb-5">
-                        <h5 class="text-secondary text-uppercase mb-4">Quick Shop</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                            <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-5">
-                        <h5 class="text-secondary text-uppercase mb-4">My Account</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                            <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-5">
-                        <h5 class="text-secondary text-uppercase mb-4">Newsletter</h5>
-                        <p>Duo stet tempor ipsum sit amet magna ipsum tempor est</p>
-                        <form action="">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Your Email Address">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary">Sign Up</button>
-                                </div>
-                            </div>
-                        </form>
-                        <h6 class="text-secondary text-uppercase mt-4 mb-3">Follow Us</h6>
-                        <div class="d-flex">
-                            <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row border-top mx-xl-5 py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
-            <div class="col-md-6 px-xl-0">
-                <p class="mb-md-0 text-center text-md-left text-secondary">
-                    &copy; <a class="text-primary" href="#">Domain</a>. All Rights Reserved. Designed
-                    by
-                    <a class="text-primary" href="https://htmlcodex.com">HTML Codex</a>
-                    <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                </p>
-            </div>
-            <div class="col-md-6 px-xl-0 text-center text-md-right">
-                <img class="img-fluid" src="img/payments.png" alt="">
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
-
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
-    <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
-
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
-</body>
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+    </body>
 
 </html>
