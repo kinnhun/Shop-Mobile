@@ -98,11 +98,88 @@ public class ProductsDAO extends DBContext {
         return productList;
     }
 
+    public List<Products> getListAllProduct() {
+        List<Products> productList = new ArrayList<>();
+        String sql = "SELECT p.product_id, p.category_id, p.name, p.description, p.price, p.stock_quantity, "
+                + "p.status, p.created_at, p.updated_at, p.sold_quantity, "
+                + "(SELECT TOP 1 pi.image_url FROM ProductImages pi WHERE pi.product_id = p.product_id) AS product_image "
+                + "FROM Products p ORDER BY p.created_at DESC";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            CategoriesDAO categoriesDAO = new CategoriesDAO();
+
+            while (rs.next()) {
+                int productId = rs.getInt("product_id");
+                int categoryId = rs.getInt("category_id");
+                String name = rs.getString("name");
+                String description = rs.getString("description");
+                java.math.BigDecimal price = rs.getBigDecimal("price");
+                int stockQuantity = rs.getInt("stock_quantity");
+                int soldQuantity = rs.getInt("sold_quantity");
+                String status = rs.getString("status");
+                java.util.Date createdAt = rs.getTimestamp("created_at");
+                java.util.Date updatedAt = rs.getTimestamp("updated_at");
+                String productImage = rs.getString("product_image");
+
+                Categories category = categoriesDAO.getCategoryById(categoryId);
+
+                Products product = new Products(productId, category, name, description, price, stockQuantity, status, createdAt, updatedAt, productImage, soldQuantity);
+                productList.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return productList;
+    }
+
+    
+    
+    public List<Products> getListProductByCategoryId(int categoryId) {
+    List<Products> productList = new ArrayList<>();
+    String sql = "SELECT p.product_id, p.category_id, p.name, p.description, p.price, p.stock_quantity, " +
+                 "p.status, p.created_at, p.updated_at, p.sold_quantity, " +
+                 "(SELECT TOP 1 pi.image_url FROM ProductImages pi WHERE pi.product_id = p.product_id) AS product_image " +
+                 "FROM Products p WHERE p.category_id = ? ORDER BY p.created_at DESC";
+
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setInt(1, categoryId);
+        try (ResultSet rs = ps.executeQuery()) {
+            CategoriesDAO categoriesDAO = new CategoriesDAO();
+
+            while (rs.next()) {
+                int productId = rs.getInt("product_id");
+                String name = rs.getString("name");
+                String description = rs.getString("description");
+                java.math.BigDecimal price = rs.getBigDecimal("price");
+                int stockQuantity = rs.getInt("stock_quantity");
+                int soldQuantity = rs.getInt("sold_quantity");
+                String status = rs.getString("status");
+                java.util.Date createdAt = rs.getTimestamp("created_at");
+                java.util.Date updatedAt = rs.getTimestamp("updated_at");
+                String productImage = rs.getString("product_image");
+
+                Categories category = categoriesDAO.getCategoryById(categoryId);
+
+                Products product = new Products(productId, category, name, description, price, stockQuantity, 
+                                                status, createdAt, updatedAt, productImage, soldQuantity);
+                productList.add(product);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return productList;
+}
+
     public static void main(String[] args) {
         ProductsDAO pdao = new ProductsDAO();
-        List<Products> listTop8Product = pdao.getListTop8NewProduct();
+        List<Products> listTop8Product = pdao.getListProductByCategoryId(1);
         for (Products products : listTop8Product) {
             System.out.println(products.toString());
         }
     }
+
+ 
+
 }
