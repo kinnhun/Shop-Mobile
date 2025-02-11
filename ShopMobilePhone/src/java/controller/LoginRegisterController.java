@@ -76,6 +76,17 @@ public class LoginRegisterController extends HttpServlet {
             }
 
         }
+        if (request.getParameter("action") != null) {
+            if (request.getParameter("action").equals("logout")) {
+                request.getSession().invalidate();
+                request.setAttribute("message", "Successfully logged!");
+                request.getRequestDispatcher("home").forward(request, response);
+                request.removeAttribute("message");
+
+                return;
+
+            }
+        }
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
@@ -149,7 +160,7 @@ public class LoginRegisterController extends HttpServlet {
 
             if (isRegistered) {
                 request.setAttribute("message", "Đăng ký thành công! Hãy đăng nhập.");
-                response.sendRedirect("login-register");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
                 request.setAttribute("error", "Đăng ký thất bại, vui lòng thử lại!");
                 request.getRequestDispatcher("register.jsp").forward(request, response);

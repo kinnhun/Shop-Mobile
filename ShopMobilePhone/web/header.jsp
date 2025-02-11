@@ -1,4 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,12 +39,23 @@
                 </div>
                 <div class="col-lg-6 text-center text-lg-right">
                     <div class="d-inline-flex align-items-center">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a href="login-register" class="dropdown-item" type="button">Login - Register</a>
-                            </div>
-                        </div>
+                       <div class="btn-group">
+    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">
+        My Account
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+        <c:choose>
+            <c:when test="${not empty sessionScope.username}">
+                <a href="profile.jsp" class="dropdown-item">Profile</a>
+                <a href="login-register?action=logout" class="dropdown-item">Logout</a>
+            </c:when>
+            <c:otherwise>
+                <a href="login-register" class="dropdown-item">Login - Register</a>
+            </c:otherwise>
+        </c:choose>
+    </div>
+</div>
+
 
 
                     </div>
@@ -60,7 +73,7 @@
             </div>
             <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
                 <div class="col-lg-4">
-                    <a href="" class="text-decoration-none">
+                    <a href="home" class="text-decoration-none">
                         <span class="h1 text-uppercase text-primary bg-dark px-2">Multi</span>
                         <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
                     </a>
