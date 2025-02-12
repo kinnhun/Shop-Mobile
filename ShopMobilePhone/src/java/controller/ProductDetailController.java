@@ -73,21 +73,31 @@ public class ProductDetailController extends HttpServlet {
         List<ProductAttributes> listProductAttributes = pdao.getProductAttributesByProductId(id);
         request.setAttribute("listProductAttributes", listProductAttributes);
 
-        // lọc theo dung lượng 
-        if (request.getParameter("storage") != null) {
-            String storage = request.getParameter("storage");
-            List<ProductAttributes> listProductAttributesBytorage = pdao.listProductAttributesByStorage(id,storage);
-            request.setAttribute("listProductAttributesBytorage", listProductAttributesBytorage);
-            request.setAttribute("storage", storage);
+        String storage = request.getParameter("storage");
+        String color = request.getParameter("color");
 
+        if (storage != null) {
+            List<ProductAttributes> listProductAttributesByStorage = pdao.listProductAttributesByStorage(id, storage);
+            request.setAttribute("listProductAttributesByStorage", listProductAttributesByStorage);
+            request.setAttribute("storage", storage);
         }
-        
-        if(request.getParameter("color")!=null){
-            String color = request.getParameter("color");
-            List<ProductAttributes> listProductAttributesByColor = pdao.getProductAttributesByColor(id,color);
+
+        if (color != null) {
+            List<ProductAttributes> listProductAttributesByColor = pdao.getProductAttributesByColor(id, color);
             request.setAttribute("listProductAttributesByColor", listProductAttributesByColor);
             request.setAttribute("color", color);
         }
+
+        if (storage != null && color != null) {
+            ProductAttributes productAttributesByStorageColor = pdao.getProductAttributesByStorageColor(id, storage, color);
+            request.setAttribute("extraPrice", productAttributesByStorageColor.getExtraPrice());
+            
+        }
+         List<Products> listTop8NewProduct = pdao.getListTop8NewProduct();
+        request.setAttribute("listTop8NewProduct", listTop8NewProduct);
+        
+        
+        // đánh giá 
         
 
         request.getRequestDispatcher("detail.jsp").forward(request, response);

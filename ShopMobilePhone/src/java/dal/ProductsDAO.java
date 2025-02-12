@@ -324,4 +324,52 @@ public class ProductsDAO extends DBContext {
         return attributes;
     }
 
+    public ProductAttributes getProductAttributesByStorageColor(int productId, String storage, String color) {
+        ProductAttributes attr = null;
+        String query = "SELECT attribute_id, product_id, color, storage, size, extra_price, stock_quantity "
+                + "FROM ProductAttributes WHERE product_id = ?";
+
+        // Nếu storage không rỗng, thêm điều kiện lọc theo storage
+        if (storage != null && !storage.isEmpty()) {
+            query += " AND storage = ?";
+        }
+
+        // Nếu color không rỗng, thêm điều kiện lọc theo color
+        if (color != null && !color.isEmpty()) {
+            query += " AND color = ?";
+        }
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, productId);
+            int paramIndex = 2; // Vị trí tham số tiếp theo
+
+            if (storage != null && !storage.isEmpty()) {
+                stmt.setString(paramIndex++, storage);
+            }
+            if (color != null && !color.isEmpty()) {
+                stmt.setString(paramIndex++, color);
+            }
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    attr = new ProductAttributes();
+                    attr.setAttributeId(rs.getInt("attribute_id"));
+
+                    Products product = new Products();
+                    product.setProductId(rs.getInt("product_id"));
+                    attr.setProductId(product);
+
+                    attr.setColor(rs.getString("color"));
+                    attr.setStorage(rs.getString("storage"));
+                    attr.setSize(rs.getString("size"));
+                    attr.setExtraPrice(rs.getBigDecimal("extra_price"));
+                    attr.setStockQuantity(rs.getInt("stock_quantity"));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi lấy thuộc tính sản phẩm theo dung lượng và màu: " + e.getMessage());
+        }
+        return attr;
+    }
+
 }
