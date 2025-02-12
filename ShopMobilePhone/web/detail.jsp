@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -108,54 +109,103 @@
                         </script>
                         <p class="mb-4">${product.description}</p>
                         <div class="d-flex mb-3">
-                            <strong class="text-dark mr-3">Sizes:</strong>
-                            <form>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="size-1" name="size">
-                                    <label class="custom-control-label" for="size-1">XS</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="size-2" name="size">
-                                    <label class="custom-control-label" for="size-2">S</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="size-3" name="size">
-                                    <label class="custom-control-label" for="size-3">M</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="size-4" name="size">
-                                    <label class="custom-control-label" for="size-4">L</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="size-5" name="size">
-                                    <label class="custom-control-label" for="size-5">XL</label>
-                                </div>
-                            </form>
+                            <strong class="text-dark mr-3">Dung lượng:</strong>
+                            <c:choose>
+                                <c:when test="${empty listProductAttributesByColor}">
+                                    <form action="detail" method="get" id="storageForm">
+                                        <input type="hidden" name="id" value="${product.productId}">
+
+                                        <c:set var="uniqueStorages" value="" />
+
+                                        <c:forEach var="attr" items="${listProductAttributes}" varStatus="status">
+                                            <c:if test="${not fn:contains(uniqueStorages, attr.storage)}">
+                                                <c:set var="uniqueStorages" value="${uniqueStorages},${attr.storage}" />
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" class="custom-control-input" id="size-${status.index}" name="storage" 
+                                                           value="${attr.storage}" 
+                                                           onchange="document.getElementById('storageForm').submit();"
+                                                           <c:if test="${attr.storage == storage}">checked</c:if>>
+                                                    <label class="custom-control-label" for="size-${status.index}">${attr.storage}</label>
+                                                </div>
+                                            </c:if>
+                                        </c:forEach>
+                                    </form>
+                                </c:when>
+
+                                <c:otherwise>
+                                    <form action="detail" method="get" id="storageForm">
+                                        <input type="hidden" name="id" value="${product.productId}">
+
+                                        <c:set var="uniqueStorages" value="" />
+
+                                        <c:forEach var="attr" items="${listProductAttributesByColor}" varStatus="status">
+                                            <c:if test="${not fn:contains(uniqueStorages, attr.storage)}">
+                                                <c:set var="uniqueStorages" value="${uniqueStorages},${attr.storage}" />
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" class="custom-control-input" id="size-${status.index}" name="storage" 
+                                                           value="${attr.storage}" 
+                                                           onchange="document.getElementById('storageForm').submit();"
+                                                           <c:if test="${attr.storage == storage}">checked</c:if>>
+                                                    <label class="custom-control-label" for="size-${status.index}">${attr.storage}</label>
+                                                </div>
+                                            </c:if>
+                                        </c:forEach>
+                                    </form>
+                                </c:otherwise>
+                            </c:choose>
+
+
+
+
+
+
+
                         </div>
                         <div class="d-flex mb-4">
-                            <strong class="text-dark mr-3">Colors:</strong>
-                            <form>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="color-1" name="color">
-                                    <label class="custom-control-label" for="color-1">Black</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="color-2" name="color">
-                                    <label class="custom-control-label" for="color-2">White</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="color-3" name="color">
-                                    <label class="custom-control-label" for="color-3">Red</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="color-4" name="color">
-                                    <label class="custom-control-label" for="color-4">Blue</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="color-5" name="color">
-                                    <label class="custom-control-label" for="color-5">Green</label>
-                                </div>
+                            <strong class="text-dark mr-3">Màu :</strong>
+
+
+
+                            <form action="detail" method="get" id="colorForm">
+                                <input type="hidden" name="id" value="${product.productId}">
+
+                                <c:choose>
+                                    <c:when test="${not empty listProductAttributesBytorage}">
+                                        <c:forEach var="attr" items="${listProductAttributesBytorage}">
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input type="radio" class="custom-control-input" id="color-${attr.attributeId}" 
+                                                       name="color" value="${attr.color}" onchange="submitForm()"
+                                                       <c:if test="${color eq attr.color}">checked</c:if>>
+                                                <label class="custom-control-label" for="color-${attr.attributeId}">${attr.color}</label>
+                                            </div>
+                                        </c:forEach>
+                                    </c:when>
+
+                                    <c:otherwise>
+                                        <c:forEach var="attr" items="${listProductAttributes}">
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input type="radio" class="custom-control-input" id="color-${attr.attributeId}" 
+                                                       name="color" value="${attr.color}" onchange="submitForm()"
+                                                       <c:if test="${color eq attr.color}">checked</c:if>>
+                                                <label class="custom-control-label" for="color-${attr.attributeId}">${attr.color}</label>
+                                            </div>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>
                             </form>
+
+                            <script>
+                                function submitForm() {
+                                    document.getElementById("colorForm").submit();
+                                }
+                            </script>
+
+
+
+
+
+
+
                         </div>
                         <div class="d-flex align-items-center mb-4 pt-2">
                             <div class="input-group quantity mr-3" style="width: 130px;">

@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Categories;
+import model.ProductAttributes;
 import model.ProductImages;
 import model.Products;
 
@@ -230,13 +231,97 @@ public class ProductsDAO extends DBContext {
         return imageList;
     }
 
-    public static void main(String[] args) {
-        ProductsDAO pdao = new ProductsDAO();
-         List<ProductImages> imageList = pdao.getAllImagesByProductId(1);
+    public List<ProductAttributes> getProductAttributesByProductId(int id) {
+        List<ProductAttributes> attributes = new ArrayList<>();
+        String query = "SELECT attribute_id, product_id, color, storage, size, extra_price, stock_quantity "
+                + "FROM ProductAttributes WHERE product_id = ?";
 
-        for (ProductImages productImages : imageList) {
-            System.out.println(imageList.toString());
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                ProductAttributes attr = new ProductAttributes();
+                attr.setAttributeId(rs.getInt("attribute_id"));
+
+                ProductsDAO pdao = new ProductsDAO();
+                Products product = pdao.getProductById(rs.getInt("product_id"));
+
+                attr.setProductId(product);
+                attr.setColor(rs.getString("color"));
+                attr.setStorage(rs.getString("storage"));
+                attr.setSize(rs.getString("size"));
+                attr.setExtraPrice(rs.getBigDecimal("extra_price"));
+                attr.setStockQuantity(rs.getInt("stock_quantity"));
+                attributes.add(attr);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return attributes;
+    }
+
+    public List<ProductAttributes> listProductAttributesByStorage(int id, String storage) {
+        List<ProductAttributes> attributes = new ArrayList<>();
+        String query = "SELECT attribute_id, product_id, color, storage, size, extra_price, stock_quantity "
+                + "FROM ProductAttributes WHERE product_id = ? AND storage = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            stmt.setString(2, storage);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ProductAttributes attr = new ProductAttributes();
+                    attr.setAttributeId(rs.getInt("attribute_id"));
+
+                    Products product = new Products();
+                    product.setProductId(rs.getInt("product_id"));
+
+                    attr.setProductId(product);
+                    attr.setColor(rs.getString("color"));
+                    attr.setStorage(rs.getString("storage"));
+                    attr.setSize(rs.getString("size"));
+                    attr.setExtraPrice(rs.getBigDecimal("extra_price"));
+                    attr.setStockQuantity(rs.getInt("stock_quantity"));
+
+                    attributes.add(attr);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return attributes;
+    }
+
+    public List<ProductAttributes> getProductAttributesByColor(int id, String color) {
+        List<ProductAttributes> attributes = new ArrayList<>();
+        String query = "SELECT attribute_id, product_id, color, storage, size, extra_price, stock_quantity "
+                + "FROM ProductAttributes WHERE color = ? AND product_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, color);
+            stmt.setInt(2, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ProductAttributes attr = new ProductAttributes();
+                    attr.setAttributeId(rs.getInt("attribute_id"));
+                    Products product = new Products();
+                    product.setProductId(rs.getInt("product_id"));
+                    attr.setProductId(product);
+                    attr.setColor(rs.getString("color"));
+                    attr.setStorage(rs.getString("storage"));
+                    attr.setSize(rs.getString("size"));
+                    attr.setExtraPrice(rs.getBigDecimal("extra_price"));
+                    attr.setStockQuantity(rs.getInt("stock_quantity"));
+
+                    attributes.add(attr);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi lấy thuộc tính sản phẩm theo màu: " + e.getMessage());
+        }
+        return attributes;
     }
 
 }

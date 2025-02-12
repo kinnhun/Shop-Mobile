@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import model.ProductAttributes;
 import model.ProductImages;
 import model.Products;
 
@@ -64,9 +65,30 @@ public class ProductDetailController extends HttpServlet {
         ProductsDAO pdao = new ProductsDAO();
         int id = Integer.parseInt(request.getParameter("id"));
         Products product = pdao.getProductById(id);
-        List<ProductImages> listImageProduct = pdao.getAllImagesByProductId(id);
         request.setAttribute("product", product);
+
+        List<ProductImages> listImageProduct = pdao.getAllImagesByProductId(id);
         request.setAttribute("listImageProduct", listImageProduct);
+
+        List<ProductAttributes> listProductAttributes = pdao.getProductAttributesByProductId(id);
+        request.setAttribute("listProductAttributes", listProductAttributes);
+
+        // lọc theo dung lượng 
+        if (request.getParameter("storage") != null) {
+            String storage = request.getParameter("storage");
+            List<ProductAttributes> listProductAttributesBytorage = pdao.listProductAttributesByStorage(id,storage);
+            request.setAttribute("listProductAttributesBytorage", listProductAttributesBytorage);
+            request.setAttribute("storage", storage);
+
+        }
+        
+        if(request.getParameter("color")!=null){
+            String color = request.getParameter("color");
+            List<ProductAttributes> listProductAttributesByColor = pdao.getProductAttributesByColor(id,color);
+            request.setAttribute("listProductAttributesByColor", listProductAttributesByColor);
+            request.setAttribute("color", color);
+        }
+        
 
         request.getRequestDispatcher("detail.jsp").forward(request, response);
     }

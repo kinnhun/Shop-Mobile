@@ -112,13 +112,13 @@ public class LoginRegisterController extends HttpServlet {
 
             if (user != null) {
                 HttpSession session = request.getSession();
-                session.setAttribute("username", username);
+                session.setAttribute("username", user);
 
                 if (user.getRole().equals("customer")) {
                     response.sendRedirect("home");
 
                 } else if (user.getRole().equals("admin")) {
-                    response.sendRedirect("dashboard");
+                    response.sendRedirect("admin/dashboard");
 
                 }
 

@@ -147,7 +147,7 @@
 
 
                     <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                        <a class="text-decoration-none" href="">
+                        <a class="text-decoration-none" href="shop?categoryId=${category.categoryId}">
                             <div class="cat-item d-flex align-items-center mb-4">
                                 <div class="overflow-hidden" style="width: 100px; height: 100px;">
                                 </div>
@@ -170,7 +170,7 @@
 
         <!-- Products Start -->
         <div class="container-fluid pt-5 pb-3">
-            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Sản phẩm nổi bật</span></h2>
             <div class="row px-xl-5">
 
 
@@ -246,7 +246,7 @@
 
         <!-- Products Start -->
         <div class="container-fluid pt-5 pb-3">
-            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Recent Products</span></h2>
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">sản phẩm mới</span></h2>
             <div class="row px-xl-5">
                   <c:forEach items="${listTop8NewProduct}" var="listProduct">
                     <div class="col-lg-3 col-md-4 col-sm-6 pb-1">

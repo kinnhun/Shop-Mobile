@@ -2,10 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.admin;
 
-import dal.CategoriesDAO;
-import dal.ProductsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,16 +12,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.Categories;
-import model.Products;
+import model.Users;
 
 /**
  *
  * @author trung
  */
-@WebServlet(name = "HomeController", urlPatterns = {"/home"})
-public class HomeController extends HttpServlet {
+@WebServlet(name = "DashboardController", urlPatterns = {"/admin/dashboard"})
+public class DashboardController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +38,10 @@ public class HomeController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeController</title>");
+            out.println("<title>Servlet DashboardController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DashboardController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,23 +59,17 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().removeAttribute("message");
-        request.getSession().removeAttribute("error");
-
-        CategoriesDAO cdao = new CategoriesDAO();
-        List<Categories> listCategories = cdao.getAllCategories();
 
         HttpSession session = request.getSession();
-        session.setAttribute("listCategories", listCategories);
+        Users user = (Users) session.getAttribute("username");
 
-        ProductsDAO pdao = new ProductsDAO();
-        List<Products> listTop8Product = pdao.getListTop8BestSellProduct();
-        request.setAttribute("listTop8Product", listTop8Product);
+        if (user == null || !"admin".equals(user.getRole())) {
+            session.setAttribute("error", "Bạn không có quyền truy cập!");
+            response.sendRedirect("../login-register");
+            return;
+        }
 
-        List<Products> listTop8NewProduct = pdao.getListTop8NewProduct();
-        request.setAttribute("listTop8NewProduct", listTop8NewProduct);
-
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        request.getRequestDispatcher("dashbroad.jsp").forward(request, response);
     }
 
     /**
