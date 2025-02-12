@@ -5,6 +5,7 @@
 package controller;
 
 import dal.ProductsDAO;
+import dal.ReviewDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,6 +17,7 @@ import java.util.List;
 import model.ProductAttributes;
 import model.ProductImages;
 import model.Products;
+import model.Reviews;
 
 /**
  *
@@ -98,6 +100,12 @@ public class ProductDetailController extends HttpServlet {
         
         
         // đánh giá 
+        ReviewDAO rdao = new ReviewDAO();
+        List<Reviews> listReviewByProductId = rdao.getAllReviewByProductId(id);
+        request.setAttribute("listReview", listReviewByProductId);
+        
+        double averageRating  = rdao.getAverageRating(id);
+        request.setAttribute("averageRating", averageRating);
         
 
         request.getRequestDispatcher("detail.jsp").forward(request, response);

@@ -37,11 +37,11 @@ public class UserDAO extends DBContext {
         return null;
     }
 
-   public boolean registerUser(String fullName, String password, String phone, String email, String address, String avatarFileName, String role) {
+    public boolean registerUser(String fullName, String password, String phone, String email, String address, String avatarFileName, String role) {
         String checkUserSQL = "SELECT user_id FROM Users WHERE email = ? OR phone = ?";
-        String insertUserSQL = "INSERT INTO Users (full_name, email, password, phone, address, avatar, role, status, created_at, updated_at) " +
-                               "VALUES (?, ?, ?, ?, ?, ?, ?, 'active', GETDATE(), GETDATE())";
-        
+        String insertUserSQL = "INSERT INTO Users (full_name, email, password, phone, address, avatar, role, status, created_at, updated_at) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, 'active', GETDATE(), GETDATE())";
+
         try (PreparedStatement checkStmt = connection.prepareStatement(checkUserSQL)) {
             checkStmt.setString(1, email);
             checkStmt.setString(2, phone);
@@ -77,13 +77,13 @@ public class UserDAO extends DBContext {
         UserDAO userDAO = new UserDAO();
 
         boolean result = userDAO.registerUser(
-            "Nguyễn Văn A",
-            "123456",  // Bạn có thể thêm mã hóa mật khẩu trước khi truyền vào đây
-            "0062497002",
-            "nguyenvana@gmail.com",
-            "Hà Nội",
-            "avatar.png",
-            "customer"
+                "Nguyễn Văn A",
+                "123456", // Bạn có thể thêm mã hóa mật khẩu trước khi truyền vào đây
+                "0062497002",
+                "nguyenvana@gmail.com",
+                "Hà Nội",
+                "avatar.png",
+                "customer"
         );
 
         if (result) {
@@ -91,6 +91,34 @@ public class UserDAO extends DBContext {
         } else {
             System.out.println("Đăng ký người dùng thất bại!");
         }
+    }
+
+    public Users getUserById(int userId) {
+        String sql = "SELECT user_id, full_name, email, password, phone, address, avatar, role, status, last_login, created_at, updated_at FROM Users WHERE user_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Users(
+                            rs.getInt("user_id"),
+                            rs.getString("full_name"),
+                            rs.getString("email"),
+                            rs.getString("password"),
+                            rs.getString("phone"),
+                            rs.getString("address"),
+                            rs.getString("avatar"),
+                            rs.getString("role"),
+                            rs.getString("status"),
+                            rs.getTimestamp("last_login"),
+                            rs.getTimestamp("created_at"),
+                            rs.getTimestamp("updated_at")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
