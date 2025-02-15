@@ -372,4 +372,33 @@ public class ProductsDAO extends DBContext {
         return attr;
     }
 
+    public int getMinPrice() {
+        String sql = "SELECT MIN(p.price + COALESCE(pa.extra_price, 0)) AS min_price "
+                + "FROM Products p "
+                + "LEFT JOIN ProductAttributes pa ON p.product_id = pa.product_id";
+        try (PreparedStatement stmt = connection.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt("min_price");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // Trả về -1 nếu có lỗi
+    }
+
+    // Lấy giá cao nhất
+    public int getMaxPrice() {
+        String sql = "SELECT MAX(p.price + COALESCE(pa.extra_price, 0)) AS max_price "
+                + "FROM Products p "
+                + "LEFT JOIN ProductAttributes pa ON p.product_id = pa.product_id";
+        try (PreparedStatement stmt = connection.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt("max_price");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // Trả về -1 nếu có lỗi
+    }
+
 }

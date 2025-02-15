@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.CategoriesDAO;
 import dal.ProductsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import model.Categories;
 import model.Products;
 
 /**
@@ -66,6 +68,7 @@ public class ShopController extends HttpServlet {
         if (request.getParameter("categoryId") != null) {
             int categoryId = Integer.parseInt(request.getParameter("categoryId"));
             listProduct = pdao.getListProductByCategoryId(categoryId);
+            request.setAttribute("categorySelected", categoryId);
 
         } else {
             listProduct = pdao.getListAllProduct();
@@ -76,7 +79,20 @@ public class ShopController extends HttpServlet {
         }
 
         request.setAttribute("listProduct", listProduct);
-
+        
+        
+        // filter
+        
+        
+        CategoriesDAO cdao = new CategoriesDAO();
+        List<Categories> listCategories = cdao.getAllCategories();
+        request.setAttribute("listCategories", listCategories);
+        
+        // min max giá
+        int min = pdao.getMinPrice();
+        int max= pdao.getMaxPrice();
+        
+               
         request.getRequestDispatcher("shop.jsp").forward(request, response);
         request.removeAttribute("error");
 
