@@ -172,50 +172,34 @@
 
                     <!-- Color End -->
 
-                    <!-- Size Start -->
-                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by size</span></h5>
-                    <div class="bg-light p-4 mb-30">
-                        <form>
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input type="checkbox" class="custom-control-input" checked id="size-all">
-                                <label class="custom-control-label" for="size-all">All Size</label>
-                                <span class="badge border font-weight-normal">1000</span>
-                            </div>
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input type="checkbox" class="custom-control-input" id="size-1">
-                                <label class="custom-control-label" for="size-1">XS</label>
-                                <span class="badge border font-weight-normal">150</span>
-                            </div>
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input type="checkbox" class="custom-control-input" id="size-2">
-                                <label class="custom-control-label" for="size-2">S</label>
-                                <span class="badge border font-weight-normal">295</span>
-                            </div>
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input type="checkbox" class="custom-control-input" id="size-3">
-                                <label class="custom-control-label" for="size-3">M</label>
-                                <span class="badge border font-weight-normal">246</span>
-                            </div>
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input type="checkbox" class="custom-control-input" id="size-4">
-                                <label class="custom-control-label" for="size-4">L</label>
-                                <span class="badge border font-weight-normal">145</span>
-                            </div>
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                                <input type="checkbox" class="custom-control-input" id="size-5">
-                                <label class="custom-control-label" for="size-5">XL</label>
-                                <span class="badge border font-weight-normal">168</span>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- Size End -->
+
                 </div>
                 <!-- Shop Sidebar End -->
 
 
                 <!-- Shop Product Start -->
                 <div class="col-lg-9 col-md-8">
+                    <!-- Bộ lọc sắp xếp -->
+                    <div class="col-lg-3 col-md-4 mb-4">
+                        <div class="filter-section">
+                            <h5 class="section-title position-relative text-uppercase mb-3">
+                                <span class="bg-secondary pr-3">Sắp xếp theo giá</span>
+                            </h5>
+                            <form action="shop" method="get">
+                                <select name="sortPrice" class="form-control" onchange="this.form.submit()">
+                                    <option value="asc" ${param.sortPrice == 'asc' ? 'selected' : ''}>Giá từ thấp đến cao</option>
+                                    <option value="desc" ${param.sortPrice == 'desc' ? 'selected' : ''}>Giá từ cao đến thấp</option>
+                                </select>
+                            </form>
+
+
+
+                        </div>
+                    </div>
+
+
                     <div class="row pb-3">
+
                         <c:if test="${empty listProduct}">
                             <h1>Không có sản phẩm nào.</h1>
                         </c:if>
@@ -236,7 +220,8 @@
                                     <div class="text-center py-4">
                                         <a class="h6 text-decoration-none text-truncate" href="detail?id=${listProduct.productId}">${listProduct.name}</a>
                                         <div class="d-flex align-items-center justify-content-center mt-2">
-                                            <h5>${listProduct.price} VND</h5><h6 class="text-muted ml-2"></h6>
+                                            <h5 class="product-price1">${listProduct.price} VND</h5>
+                                            <h6 class="text-muted ml-2"></h6>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-center mb-1">
                                             <small class="fa fa-star text-primary mr-1"></small>
@@ -353,6 +338,9 @@
 
 
                     </div>
+
+
+
                 </div>
                 <!-- Shop Product End -->
             </div>

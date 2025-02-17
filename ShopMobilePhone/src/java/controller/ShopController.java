@@ -13,6 +13,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import model.Categories;
 import model.Products;
@@ -74,8 +77,7 @@ public class ShopController extends HttpServlet {
             int minPrice = Integer.parseInt(request.getParameter("min"));
             int maxPrice = Integer.parseInt(request.getParameter("max"));
 
-            listProduct = pdao.getListProductByMinMaxPrice(minPrice,maxPrice);
-            
+            listProduct = pdao.getListProductByMinMaxPrice(minPrice, maxPrice);
 
         } else {
             listProduct = pdao.getListAllProduct();
@@ -83,6 +85,26 @@ public class ShopController extends HttpServlet {
         }
         if (listProduct.isEmpty()) {
             request.setAttribute("error", "Không có sản phẩm nào.");
+        }
+
+        if (request.getParameter("sortPrice") != null) {
+            String sortPrice = request.getParameter("sortPrice");
+
+            if ("desc".equals(sortPrice)) {
+                Collections.sort(listProduct, new Comparator<Products>() {
+                    @Override
+                    public int compare(Products p1, Products p2) {
+                        return p2.getPrice().compareTo(p1.getPrice());
+                    }
+                });
+            } else if ("asc".equals(sortPrice)) {
+                Collections.sort(listProduct, new Comparator<Products>() {
+                    @Override
+                    public int compare(Products p1, Products p2) {
+                        return p1.getPrice().compareTo(p2.getPrice());
+                    }
+                });
+            }
         }
 
         request.setAttribute("listProduct", listProduct);
