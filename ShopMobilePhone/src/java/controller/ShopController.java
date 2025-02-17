@@ -70,6 +70,13 @@ public class ShopController extends HttpServlet {
             listProduct = pdao.getListProductByCategoryId(categoryId);
             request.setAttribute("categorySelected", categoryId);
 
+        } else if (request.getParameter("min") != null) {
+            int minPrice = Integer.parseInt(request.getParameter("min"));
+            int maxPrice = Integer.parseInt(request.getParameter("max"));
+
+            listProduct = pdao.getListProductByMinMaxPrice(minPrice,maxPrice);
+            
+
         } else {
             listProduct = pdao.getListAllProduct();
 
@@ -79,20 +86,18 @@ public class ShopController extends HttpServlet {
         }
 
         request.setAttribute("listProduct", listProduct);
-        
-        
+
         // filter
-        
-        
         CategoriesDAO cdao = new CategoriesDAO();
         List<Categories> listCategories = cdao.getAllCategories();
         request.setAttribute("listCategories", listCategories);
-        
+
         // min max giá
         int min = pdao.getMinPrice();
-        int max= pdao.getMaxPrice();
-        
-               
+        int max = pdao.getMaxPrice();
+        request.setAttribute("minPrice", min);
+        request.setAttribute("maxPrice", max);
+
         request.getRequestDispatcher("shop.jsp").forward(request, response);
         request.removeAttribute("error");
 

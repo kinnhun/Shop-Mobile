@@ -401,4 +401,52 @@ public class ProductsDAO extends DBContext {
         return -1; // Trả về -1 nếu có lỗi
     }
 
+    public List<Products> getListProductByMinMaxPrice(int minPrice, int maxPrice) {
+        List<Products> productList = new ArrayList<>();
+        String sql = "SELECT p.product_id, p.category_id, p.name, p.description, p.price, p.stock_quantity, \n"
+                + "       p.status, p.created_at, p.updated_at, p.sold_quantity, \n"
+                + "       (SELECT TOP 1 pi.image_url FROM ProductImages pi WHERE pi.product_id = p.product_id) AS product_image\n"
+                + "FROM Products p\n"
+                + "WHERE p.price BETWEEN ? AND ? \n"
+                + "ORDER BY p.created_at DESC;";
+        CategoriesDAO categoriesDAO = new CategoriesDAO();
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, minPrice);
+            ps.setInt(2, maxPrice);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int productId = rs.getInt("product_id");
+                int categoryId = rs.getInt("category_id");
+                String name = rs.getString("name");
+                String description = rs.getString("description");
+                java.math.BigDecimal price = rs.getBigDecimal("price");
+                int stockQuantity = rs.getInt("stock_quantity");
+                int soldQuantity = rs.getInt("sold_quantity");
+                String status = rs.getString("status");
+                java.util.Date createdAt = rs.getTimestamp("created_at");
+                java.util.Date updatedAt = rs.getTimestamp("updated_at");
+                String productImage = rs.getString("product_image");
+
+                // Lấy thông tin category từ categoriesDAO
+                Categories category = categoriesDAO.getCategoryById(categoryId);
+
+                Products product = new Products(productId, category, name, description, price, stockQuantity, status, createdAt, updatedAt, productImage, soldQuantity);
+                productList.add(product);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return productList;
+    }
+
+    public static void main(String[] args) {
+        ProductsDAO pdao = new ProductsDAO();
+        List<Products> productList = pdao.getListProductByMinMaxPrice(10000, 2122290000);
+        for (Products products : productList) {
+            System.out.println(products.toString());
+        }
+    }
 }

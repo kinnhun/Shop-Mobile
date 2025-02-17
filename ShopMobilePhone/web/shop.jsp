@@ -86,16 +86,117 @@
                     </div>
                     <!-- Price End -->
 
-                    <!-- Color Start -->
-                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Lọc theo giá</span></h5>
+                    <!-- Bộ lọc giá với 1 thanh trượt đôi -->
+                    <h5 class="section-title position-relative text-uppercase mb-3">
+                        <span class="bg-secondary pr-3">Lọc theo giá</span>
+                    </h5>
                     <div class="bg-light p-4 mb-30">
-                        <form>
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <p></p>
+                        <form action="shop" method="GET">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span>Giá từ: <span id="minPriceValue">${minPrice}</span> VND</span>
+                                <span>đến: <span id="maxPriceValue">${maxPrice}</span> VND</span>
                             </div>
-                           
+                            <div class="range-slider">
+                                <input type="range" id="minPrice" name="min" min="0" max="10000000" step="500000" value="${minPrice}" oninput="updatePriceValue()">
+                                <input type="range" id="maxPrice" name="max" min="0" max="10000000" step="500000" value="${maxPrice}" oninput="updatePriceValue()">
+                                <div class="slider-track"></div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3 w-100">Lọc giá</button>
                         </form>
                     </div>
+                    <style>
+                        /* Định dạng thanh trượt */
+                        .range-slider {
+                            position: relative;
+                            width: 100%;
+                            height: 5px;
+                            background: #ddd;
+                            border-radius: 5px;
+                            margin-top: 10px;
+                        }
+
+                        .range-slider input {
+                            position: absolute;
+                            width: 100%;
+                            appearance: none;
+                            background: none;
+                            pointer-events: none;
+                        }
+
+                        .range-slider input::-webkit-slider-thumb {
+                            appearance: none;
+                            width: 16px;
+                            height: 16px;
+                            background: #727CF5;
+                            border-radius: 50%;
+                            cursor: pointer;
+                            pointer-events: auto;
+                        }
+
+                        .slider-track {
+                            position: absolute;
+                            height: 5px;
+                            background: #727CF5;
+                            border-radius: 5px;
+                            z-index: -1;
+                        }
+
+                        .btn {
+                            background-color: #727CF5;
+                            border: none;
+                        }
+
+                    </style>
+
+
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            // Lấy giá trị từ JSP
+                            let minPrice = document.getElementById("minPrice");
+                            let maxPrice = document.getElementById("maxPrice");
+
+                            // Lấy giá trị từ URL (nếu có)
+                            const urlParams = new URLSearchParams(window.location.search);
+                            if (urlParams.has("min"))
+                                minPrice.value = urlParams.get("min");
+                            if (urlParams.has("max"))
+                                maxPrice.value = urlParams.get("max");
+
+                            updatePriceValue(); // Gọi hàm cập nhật ngay khi tải trang
+                        });
+
+                        function updatePriceValue() {
+                            let minPrice = document.getElementById("minPrice");
+                            let maxPrice = document.getElementById("maxPrice");
+
+                            let minPriceValue = parseInt(minPrice.value);
+                            let maxPriceValue = parseInt(maxPrice.value);
+
+                            // Đảm bảo min không vượt max
+                            if (minPriceValue > maxPriceValue - 500000) {
+                                minPriceValue = maxPriceValue - 500000;
+                                minPrice.value = minPriceValue;
+                            }
+
+                            if (maxPriceValue < minPriceValue + 500000) {
+                                maxPriceValue = minPriceValue + 500000;
+                                maxPrice.value = maxPriceValue;
+                            }
+
+                            // Hiển thị giá trị cập nhật
+                            document.getElementById("minPriceValue").innerText = minPriceValue.toLocaleString() + " VND";
+                            document.getElementById("maxPriceValue").innerText = maxPriceValue.toLocaleString() + " VND";
+
+                            // Cập nhật thanh trượt
+                            let track = document.querySelector(".slider-track");
+                            let minPercent = (minPriceValue / 10000000) * 100;
+                            let maxPercent = (maxPriceValue / 10000000) * 100;
+                            track.style.left = minPercent + "%";
+                            track.style.width = (maxPercent - minPercent) + "%";
+                        }
+                    </script>
+
                     <!-- Color End -->
 
                     <!-- Size Start -->
@@ -180,15 +281,104 @@
 
                         <div class="col-12">
                             <nav>
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item disabled"><a class="page-link" href="#">Previous</span></a></li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                <ul class="pagination justify-content-center" id="pagination">
+                                    <li class="page-item disabled" id="prevPage"><a class="page-link" href="#">Previous</a></li>
+                                    <li class="page-item" id="nextPage"><a class="page-link" href="#">Next</a></li>
                                 </ul>
                             </nav>
                         </div>
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const productsPerPage = 6;
+                                const products = document.querySelectorAll('.product-item');
+                                const totalProducts = products.length;
+                                const totalPages = Math.ceil(totalProducts / productsPerPage);
+
+                                const pagination = document.getElementById('pagination');
+                                const prevPage = document.getElementById('prevPage');
+                                const nextPage = document.getElementById('nextPage');
+
+                                function createPageLinks() {
+                                    const ul = pagination;
+                                    let existingPageNumbers = ul.querySelectorAll('.page-number');
+                                    existingPageNumbers.forEach(element => element.remove());
+
+                                    for (let i = 1; i <= totalPages; i++) {
+                                        const li = document.createElement('li');
+                                        li.classList.add('page-item', 'page-number');
+                                        li.id = 'page' + i;
+
+                                        const a = document.createElement('a');
+                                        a.classList.add('page-link');
+                                        a.href = '#';
+                                        a.textContent = i;
+
+                                        li.appendChild(a);
+                                        ul.insertBefore(li, nextPage);
+
+                                        a.addEventListener('click', (e) => {
+                                            e.preventDefault();
+                                            currentPage = i;
+                                            showPage(i);
+                                        });
+                                    }
+                                }
+
+                                function showPage(page) {
+                                    products.forEach((product, index) => {
+                                        if (index >= (page - 1) * productsPerPage && index < page * productsPerPage) {
+                                            product.style.display = 'block';
+                                        } else {
+                                            product.style.display = 'none';
+                                        }
+                                    });
+
+                                    const pageLinks = pagination.querySelectorAll('.page-number');
+                                    pageLinks.forEach(link => link.classList.remove('active'));
+                                    const activePageLink = document.getElementById('page' + page);
+                                    if (activePageLink) {
+                                        activePageLink.classList.add('active');
+                                    }
+
+                                    prevPage.classList.toggle('disabled', page === 1);
+                                    nextPage.classList.toggle('disabled', page === totalPages);
+
+                                    const url = new URL(window.location.href);
+                                    url.searchParams.set('page', page);
+                                    window.history.pushState(null, '', url.toString());
+                                }
+
+                                prevPage.addEventListener('click', function (e) {
+                                    e.preventDefault();
+                                    if (currentPage > 1) {
+                                        currentPage--;
+                                        showPage(currentPage);
+                                    }
+                                });
+
+                                nextPage.addEventListener('click', function (e) {
+                                    e.preventDefault();
+                                    if (currentPage < totalPages) {
+                                        currentPage++;
+                                        showPage(currentPage);
+                                    }
+                                });
+
+
+                                createPageLinks();
+
+                                const urlParams = new URLSearchParams(window.location.search);
+                                currentPage = parseInt(urlParams.get('page')) || 1;
+                                showPage(currentPage);
+                            });
+
+                        </script>
+
+
+
+
+
                     </div>
                 </div>
                 <!-- Shop Product End -->
