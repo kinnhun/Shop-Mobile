@@ -97,8 +97,8 @@
                                 <span>đến: <span id="maxPriceValue">${maxPrice}</span> VND</span>
                             </div>
                             <div class="range-slider">
-                                <input type="range" id="minPrice" name="min" min="0" max="10000000" step="500000" value="${minPrice}" oninput="updatePriceValue()">
-                                <input type="range" id="maxPrice" name="max" min="0" max="10000000" step="500000" value="${maxPrice}" oninput="updatePriceValue()">
+                                <input type="range" id="minPrice" name="min" min="0" max="${maxPrice}" step="500000" value="${param.min}" oninput="updatePriceValue()">
+                                <input type="range" id="maxPrice" name="max" min="0" max="${maxPrice}" step="500000" value="${param.max}" oninput="updatePriceValue()">
                                 <div class="slider-track"></div>
                             </div>
                             <button type="submit" class="btn btn-primary mt-3 w-100">Lọc giá</button>
@@ -146,55 +146,28 @@
                             border: none;
                         }
 
-                    </style>
-
+                    </style>    
 
 
                     <script>
-                        document.addEventListener("DOMContentLoaded", function () {
-                            // Lấy giá trị từ JSP
-                            let minPrice = document.getElementById("minPrice");
-                            let maxPrice = document.getElementById("maxPrice");
-
-                            // Lấy giá trị từ URL (nếu có)
-                            const urlParams = new URLSearchParams(window.location.search);
-                            if (urlParams.has("min"))
-                                minPrice.value = urlParams.get("min");
-                            if (urlParams.has("max"))
-                                maxPrice.value = urlParams.get("max");
-
-                            updatePriceValue(); // Gọi hàm cập nhật ngay khi tải trang
-                        });
+                        const minPriceInput = document.getElementById('minPrice');
+                        const maxPriceInput = document.getElementById('maxPrice');
+                        const minPriceValue = document.getElementById('minPriceValue');
+                        const maxPriceValue = document.getElementById('maxPriceValue');
 
                         function updatePriceValue() {
-                            let minPrice = document.getElementById("minPrice");
-                            let maxPrice = document.getElementById("maxPrice");
+                            minPriceValue.textContent = minPriceInput.value.toLocaleString() + " VND";
+                            maxPriceValue.textContent = maxPriceInput.value.toLocaleString() + " VND";
 
-                            let minPriceValue = parseInt(minPrice.value);
-                            let maxPriceValue = parseInt(maxPrice.value);
+                            const minPricePosition = (minPriceInput.value / minPriceInput.max) * 100;
+                            const maxPricePosition = (maxPriceInput.value / maxPriceInput.max) * 100;
 
-                            // Đảm bảo min không vượt max
-                            if (minPriceValue > maxPriceValue - 500000) {
-                                minPriceValue = maxPriceValue - 500000;
-                                minPrice.value = minPriceValue;
-                            }
-
-                            if (maxPriceValue < minPriceValue + 500000) {
-                                maxPriceValue = minPriceValue + 500000;
-                                maxPrice.value = maxPriceValue;
-                            }
-
-                            // Hiển thị giá trị cập nhật
-                            document.getElementById("minPriceValue").innerText = minPriceValue.toLocaleString() + " VND";
-                            document.getElementById("maxPriceValue").innerText = maxPriceValue.toLocaleString() + " VND";
-
-                            // Cập nhật thanh trượt
-                            let track = document.querySelector(".slider-track");
-                            let minPercent = (minPriceValue / 10000000) * 100;
-                            let maxPercent = (maxPriceValue / 10000000) * 100;
-                            track.style.left = minPercent + "%";
-                            track.style.width = (maxPercent - minPercent) + "%";
+                            document.querySelector('.slider-track').style.left = `${minPricePosition}%`;
+                            document.querySelector('.slider-track').style.right = `${100 - maxPricePosition}%`;
                         }
+
+                        updatePriceValue();
+
                     </script>
 
                     <!-- Color End -->
