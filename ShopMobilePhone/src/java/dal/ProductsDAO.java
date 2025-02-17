@@ -4,6 +4,7 @@
  */
 package dal;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -442,11 +443,41 @@ public class ProductsDAO extends DBContext {
         return productList;
     }
 
-    public static void main(String[] args) {
-        ProductsDAO pdao = new ProductsDAO();
-        List<Products> productList = pdao.getListProductByMinMaxPrice(10000, 2122290000);
-        for (Products products : productList) {
-            System.out.println(products.toString());
+public List<Products> getListProduct(int categoryId, BigDecimal minPrice, BigDecimal maxPrice) {
+    List<Products> filteredProducts = new ArrayList<>();
+
+    List<Products> allProducts = getListAllProduct();
+
+    // Nếu không có bất kỳ bộ lọc nào, trả về tất cả sản phẩm
+    if (categoryId == 0 && minPrice.compareTo(BigDecimal.ZERO) == 0 && maxPrice.compareTo(BigDecimal.ZERO) == 0) {
+        return allProducts;
+    }
+
+    for (Products product : allProducts) {
+        int productCategoryId = product.getCategoryId().getCategoryId();
+        boolean matchesCategory = (categoryId == 0 || productCategoryId == categoryId);
+        boolean matchesPrice = (product.getPrice().compareTo(minPrice) >= 0 && product.getPrice().compareTo(maxPrice) <= 0);
+
+        // Thêm sản phẩm nếu thỏa mãn ít nhất một điều kiện
+        if ((categoryId == 0 || matchesCategory) && (minPrice.compareTo(BigDecimal.ZERO) == 0 && maxPrice.compareTo(BigDecimal.ZERO) == 0 || matchesPrice)) {
+            filteredProducts.add(product);
         }
     }
+
+    return filteredProducts;
+}
+
+   public static void main(String[] args) {
+    ProductsDAO pdao = new ProductsDAO();
+    int categoryId = 2;  // Ví dụ, categoryId = 1
+    BigDecimal minPrice = new BigDecimal("0");  
+    BigDecimal maxPrice = new BigDecimal("0"); 
+
+    List<Products> productList = pdao.getListProduct(categoryId, minPrice, maxPrice);
+    for (Products products : productList) {
+        System.out.println(products.toString());
+    }
+}
+
+
 }

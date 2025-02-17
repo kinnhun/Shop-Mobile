@@ -64,17 +64,23 @@
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" id="category-all" name="categoryId" value=""
                                    onchange="window.location.href = 'shop'"
-                                   <c:if test="${empty param.categoryId}">checked</c:if>>
-                                   <label class="custom-control-label" for="category-all">Tất cả</label>
-                            </div>
+                                   <c:if test="${requestScope.categoryId == 0}">checked</c:if>>
+                            <label class="custom-control-label" for="category-all">Tất cả</label>
+                        </div>
 
 
-                            <form action="shop" method="get">
+                        <form action="shop" method="get">
+
+                            <input hidden="" name="min" value="${requestScope.min}">
+                            <input hidden="" name="max" value="${requestScope.max}" >
+
+
+
                             <c:forEach var="category" items="${listCategories}">
                                 <div class="custom-control custom-radio d-flex align-items-center justify-content-between">
                                     <input type="radio" class="custom-control-input" id="category-${category.categoryId}" 
                                            name="categoryId" value="${category.categoryId}"
-                                           ${param.categoryId == category.categoryId ? 'checked' : ''}
+                                           ${requestScope.categoryId == category.categoryId ? 'checked' : ''}
                                            onchange="this.form.submit()">
                                     <label class="custom-control-label" for="category-${category.categoryId}">${category.categoryName}</label>
                                 </div>
@@ -92,13 +98,18 @@
                     </h5>
                     <div class="bg-light p-4 mb-30">
                         <form action="shop" method="GET">
+
+
+
+
+                            <input name="categoryId" value="${requestScope.categoryId}" hidden="">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <span>Giá từ: <span id="minPriceValue">${minPrice}</span> VND</span>
                                 <span>đến: <span id="maxPriceValue">${maxPrice}</span> VND</span>
                             </div>
                             <div class="range-slider">
-                                <input type="range" id="minPrice" name="min" min="0" max="${maxPrice}" step="500000" value="${param.min}" oninput="updatePriceValue()">
-                                <input type="range" id="maxPrice" name="max" min="0" max="${maxPrice}" step="500000" value="${param.max}" oninput="updatePriceValue()">
+                                <input type="range" id="minPrice" name="min" min="0" max="${maxPrice}" step="500000" value="${requestScope.min}" oninput="updatePriceValue()">
+                                <input type="range" id="maxPrice" name="max" min="0" max="${maxPrice}" step="500000" value="${requestScope.max}" oninput="updatePriceValue()">
                                 <div class="slider-track"></div>
                             </div>
                             <button type="submit" class="btn btn-primary mt-3 w-100">Lọc giá</button>
@@ -156,6 +167,10 @@
                         const maxPriceValue = document.getElementById('maxPriceValue');
 
                         function updatePriceValue() {
+                            if (parseInt(minPriceInput.value) > parseInt(maxPriceInput.value)) {
+                                maxPriceInput.value = minPriceInput.value;
+                            }
+
                             minPriceValue.textContent = minPriceInput.value.toLocaleString() + " VND";
                             maxPriceValue.textContent = maxPriceInput.value.toLocaleString() + " VND";
 
@@ -166,9 +181,12 @@
                             document.querySelector('.slider-track').style.right = `${100 - maxPricePosition}%`;
                         }
 
-                        updatePriceValue();
+                        minPriceInput.addEventListener('input', updatePriceValue);
+                        maxPriceInput.addEventListener('input', updatePriceValue);
 
+                        updatePriceValue();
                     </script>
+
 
                     <!-- Color End -->
 
@@ -186,6 +204,10 @@
                                 <span class="bg-secondary pr-3">Sắp xếp theo giá</span>
                             </h5>
                             <form action="shop" method="get">
+                                <input hidden="" name="min" value="${requestScope.min}">
+                                <input hidden="" name="max" value="${requestScope.max}" ><!-- comment -->
+                                <input name="categoryId" value="${requestScope.categoryId}" hidden="">
+
                                 <select name="sortPrice" class="form-control" onchange="this.form.submit()">
                                     <option value="asc" ${param.sortPrice == 'asc' ? 'selected' : ''}>Giá từ thấp đến cao</option>
                                     <option value="desc" ${param.sortPrice == 'desc' ? 'selected' : ''}>Giá từ cao đến thấp</option>

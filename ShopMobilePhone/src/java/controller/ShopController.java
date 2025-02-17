@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -67,22 +68,24 @@ public class ShopController extends HttpServlet {
             throws ServletException, IOException {
 
         ProductsDAO pdao = new ProductsDAO();
-        List<Products> listProduct = null;
+        List<Products> listProduct = new ArrayList<>();
+        int categoryId = 0;
+        BigDecimal minPrice = new BigDecimal("0");
+        BigDecimal maxPrice = new BigDecimal("0");
+
         if (request.getParameter("categoryId") != null) {
-            int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-            listProduct = pdao.getListProductByCategoryId(categoryId);
-            request.setAttribute("categorySelected", categoryId);
-
-        } else if (request.getParameter("min") != null) {
-            int minPrice = Integer.parseInt(request.getParameter("min"));
-            int maxPrice = Integer.parseInt(request.getParameter("max"));
-
-            listProduct = pdao.getListProductByMinMaxPrice(minPrice, maxPrice);
-
-        } else {
-            listProduct = pdao.getListAllProduct();
+            categoryId = Integer.parseInt(request.getParameter("categoryId"));
 
         }
+
+        if (request.getParameter("min") != null && request.getParameter("max") != null) {
+            minPrice = new BigDecimal(request.getParameter("min"));
+            maxPrice = new BigDecimal(request.getParameter("max"));
+
+        }
+
+        listProduct = pdao.getListProduct(categoryId, minPrice, maxPrice);
+
         if (listProduct.isEmpty()) {
             request.setAttribute("error", "Không có sản phẩm nào.");
         }
@@ -107,18 +110,23 @@ public class ShopController extends HttpServlet {
             }
         }
 
+        // min max giá
+        int min = pdao.getMinPrice();
+        int max = pdao.getMaxPrice();
+        request.setAttribute("minPrice", min);
+        request.setAttribute("maxPrice", max);
+
+        // selected
+        request.setAttribute("min", minPrice);
+        request.setAttribute("max", maxPrice);
+        request.setAttribute("categoryId", categoryId);
+
         request.setAttribute("listProduct", listProduct);
 
         // filter
         CategoriesDAO cdao = new CategoriesDAO();
         List<Categories> listCategories = cdao.getAllCategories();
         request.setAttribute("listCategories", listCategories);
-
-        // min max giá
-        int min = pdao.getMinPrice();
-        int max = pdao.getMaxPrice();
-        request.setAttribute("minPrice", min);
-        request.setAttribute("maxPrice", max);
 
         request.getRequestDispatcher("shop.jsp").forward(request, response);
         request.removeAttribute("error");
