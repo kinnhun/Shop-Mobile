@@ -4,9 +4,7 @@
  */
 package controller;
 
-import dal.CategoriesDAO;
 import dal.FavoriteDAO;
-import dal.ProductsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,16 +14,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.Categories;
-import model.Products;
+import model.Favorites;
 import model.Users;
 
-/**
- *
- * @author trung
- */
-@WebServlet(name = "HomeController", urlPatterns = {"/home"})
-public class HomeController extends HttpServlet {
+@WebServlet(name = "FavoritesController", urlPatterns = {"/favorites"})
+public class FavoritesController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +37,10 @@ public class HomeController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeController</title>");
+            out.println("<title>Servlet FavoritesController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet FavoritesController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,30 +58,57 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().removeAttribute("message");
-        request.getSession().removeAttribute("error");
-
-        CategoriesDAO cdao = new CategoriesDAO();
-        List<Categories> listCategories = cdao.getAllCategories();
 
         HttpSession session = request.getSession();
-        session.setAttribute("listCategories", listCategories);
-
-        ProductsDAO pdao = new ProductsDAO();
-        List<Products> listTop8Product = pdao.getListTop8BestSellProduct();
-        request.setAttribute("listTop8Product", listTop8Product);
-
-        List<Products> listTop8NewProduct = pdao.getListTop8NewProduct();
-        request.setAttribute("listTop8NewProduct", listTop8NewProduct);
-
         Users user = (Users) session.getAttribute("username");
-        if (user != null) {
-            FavoriteDAO fdao = new FavoriteDAO();
-            int countFavorite = fdao.countFavoriteByUserId(user.getUserId());
-            session.setAttribute("countFavorite", countFavorite);
+        if (user == null) {
+            session.setAttribute("error", "Bạn cần đăng nhập trước!");
+            response.sendRedirect("login-register");
+            return;
+
         }
 
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        FavoriteDAO favoriteDao = new FavoriteDAO();
+
+        if (request.getParameter("action") != null) {
+            String action = request.getParameter("action");
+            if (action.equals("favorites")) {
+                int productId = Integer.parseInt(request.getParameter("id"));
+
+                boolean checkExist = favoriteDao.checkExistFavorite(user.getUserId(), productId);
+                if (!checkExist) {
+                    boolean isAdded = favoriteDao.addListFavorites(user.getUserId(), productId);
+                    if (isAdded) {
+                        request.setAttribute("message", "Thêm thành công!");
+                    } else {
+                        request.setAttribute("error", "Thêm thất bại!");
+                    }
+                } else {
+                    request.setAttribute("error", "Sản phẫm đã được yêu thích!");
+                }
+
+            }
+        }
+
+        List<Favorites> listFavoritesByUserId = favoriteDao.getAllFavoriteByUserId(user.getUserId());
+        request.setAttribute("listFavorites", listFavoritesByUserId);
+
+        // 
+        if (listFavoritesByUserId.isEmpty()) {
+            request.setAttribute("error", "Không có sản phẩm nào yêu thích!");
+        }
+        
+        int count =0;
+        for (Favorites favorites : listFavoritesByUserId) {
+            count ++;
+        }
+        session.setAttribute("countFavorite", count);
+
+        request.getRequestDispatcher("favorites.jsp").forward(request, response);
+        request.removeAttribute("error");
+        request.removeAttribute("message");
+        return;
+
     }
 
     /**
@@ -102,7 +122,22 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        int favoriteId = Integer.parseInt(request.getParameter("favoriteId"));
+        String action = request.getParameter("action");
+        FavoriteDAO fdao = new FavoriteDAO();
+
+        if (action.equals("remove")) {
+            boolean checkRemove = fdao.removeFavoriteById(favoriteId);
+            if (checkRemove) {
+                request.setAttribute("message", "Xóa thành công!");
+            } else {
+                request.setAttribute("error", "Xóa thất bại!");
+
+            }
+        }
+
+        doGet(request, response);
     }
 
     /**
