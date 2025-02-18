@@ -5,6 +5,7 @@
 package controller;
 
 import dal.CartDAO;
+import dal.VouchersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,9 +14,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import model.Cart;
 import model.Users;
+import model.Vouchers;
 
 @WebServlet(name = "CartController", urlPatterns = {"/cart"})
 public class CartController extends HttpServlet {
@@ -72,6 +76,17 @@ public class CartController extends HttpServlet {
         List<Cart> listCart = cartDao.getAllCart(user.getUserId());
         request.setAttribute("listCart", listCart);
 
+        // tính tổng tiền
+        BigDecimal totalCart = BigDecimal.ZERO;
+        for (Cart cart : listCart) {
+            BigDecimal productPrice = cart.getProductId().getPrice();
+            BigDecimal extraPrice = cart.getAttributeId().getExtraPrice();
+            BigDecimal quantity = BigDecimal.valueOf(cart.getQuantity());
+
+            totalCart = totalCart.add((productPrice.add(extraPrice)).multiply(quantity));
+        }
+        request.setAttribute("totalCart", totalCart);
+
         request.getRequestDispatcher("cart.jsp").forward(request, response);
         request.removeAttribute("productAttributesId");
         session.removeAttribute("error");
@@ -106,19 +121,20 @@ public class CartController extends HttpServlet {
                 int quantity = Integer.parseInt(request.getParameter("quantity"));
                 String operator = request.getParameter("operator");
 
-                // Nếu số lượng = 0 thì xóa giỏ hàng
-                if (quantity == 0) {
-                    if (cartDao.deleteCartById(cartId)) {
-                        request.setAttribute("message", "Xóa sản phẩm khỏi giỏ hàng thành công!");
-                    } else {
-                        request.setAttribute("error", "Xóa sản phẩm thất bại!");
-                    }
-                    doGet(request, response);
-                    return;
-                }
-
                 // Cập nhật số lượng dựa trên thao tác
                 if ("minus".equals(operator)) {
+
+                    // Nếu số lượng = 0 thì xóa giỏ hàng
+                    if (quantity == 1) {
+                        if (cartDao.deleteCartById(cartId)) {
+                            request.setAttribute("message", "Xóa sản phẩm khỏi giỏ hàng thành công!");
+                        } else {
+                            request.setAttribute("error", "Xóa sản phẩm thất bại!");
+                        }
+                        doGet(request, response);
+                        return;
+                    }
+
                     quantity--;
                 } else if ("plus".equals(operator)) {
                     quantity++;
@@ -128,15 +144,10 @@ public class CartController extends HttpServlet {
                     return;
                 }
 
-                // Kiểm tra số lượng hợp lệ trước khi cập nhật
-                if (quantity > 0) {
-                    if (cartDao.updateQuantityByCartId(cartId, quantity)) {
-                        request.setAttribute("message", "Cập nhật số lượng thành công!");
-                    } else {
-                        request.setAttribute("error", "Cập nhật số lượng thất bại!");
-                    }
+                if (cartDao.updateQuantityByCartId(cartId, quantity)) {
+                    request.setAttribute("message", "Cập nhật số lượng thành công!");
                 } else {
-                    request.setAttribute("error", "Số lượng không hợp lệ!");
+                    request.setAttribute("error", "Cập nhật số lượng thất bại!");
                 }
 
             } catch (NumberFormatException e) {
@@ -181,6 +192,61 @@ public class CartController extends HttpServlet {
                 return;
 
             }
+
+            doGet(request, response);
+        }
+
+        // Xử lý áp dụng mã giảm giá
+        if ("voucher".equals(action)) {
+            String code = request.getParameter("code");
+
+            if (code == null || code.trim().isEmpty()) {
+                request.setAttribute("error", "Vui lòng nhập mã giảm giá!");
+                doGet(request, response);
+                return;
+            }
+
+            VouchersDAO vdao = new VouchersDAO();
+            Vouchers voucher = vdao.getVoucherByCode(code);
+
+            // Kiểm tra nếu voucher không tồn tại
+            if (voucher == null) {
+                request.setAttribute("error", "Mã giảm giá không hợp lệ hoặc không tồn tại!");
+                doGet(request, response);
+                return;
+            }
+
+            BigDecimal totalCart;
+            try {
+                totalCart = new BigDecimal(request.getParameter("totalCart"));
+            } catch (NumberFormatException e) {
+                request.setAttribute("error", "Giá trị đơn hàng không hợp lệ!");
+                doGet(request, response);
+                return;
+            }
+
+            if (voucher.getMinOrderValue().compareTo(totalCart) > 0) {
+                request.setAttribute("error", "Đơn hàng không đáp ứng đủ điều kiện!");
+                doGet(request, response);
+                return;
+            }
+
+            if (voucher.getMaxUsage() <= 0) {
+                request.setAttribute("error", "Mã giảm giá đã được dùng hết!");
+                doGet(request, response);
+                return;
+            }
+
+            if (voucher.getExpiryDate().before(new Date())) {
+                request.setAttribute("error", "Voucher đã hết hạn!");
+                doGet(request, response);
+                return;
+            }
+
+            // Nếu voucher hợp lệ, lưu vào session
+            HttpSession session = request.getSession();
+            request.setAttribute("message", "Đã áp dụng mã giảm giá: " + voucher.getDiscountPercentage() + "%");
+            session.setAttribute("appliedVoucher", voucher);
 
             doGet(request, response);
         }

@@ -99,7 +99,7 @@
                                             }
                                         </script>
                                     </td>
-                                    <td class="align-middle">$150</td>
+                                    <td class="align-middle">${(listCart.productId.price + listCart.attributeId.extraPrice) * listCart.quantity} VND</td>
                                     <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
                                 </tr>
                             </c:forEach>
@@ -113,11 +113,13 @@
                     </table>
                 </div>
                 <div class="col-lg-4">
-                    <form class="mb-30" action="">
+                    <form class="mb-30" action="cart" method="post">
+                        <input name="action" value="voucher" hidden="">
+                        <input name="totalCart" value="${totalCart}" hidden="">
                         <div class="input-group">
-                            <input type="text" class="form-control border-0 p-4" placeholder="Coupon Code">
+                            <input name="code" type="text" class="form-control border-0 p-4" placeholder="Mã giảm giá">
                             <div class="input-group-append">
-                                <button class="btn btn-primary">Apply Coupon</button>
+                                <button type="submit" class="btn btn-primary">Áp dụng</button>
                             </div>
                         </div>
                     </form>
@@ -125,21 +127,32 @@
                     <div class="bg-light p-30 mb-5">
                         <div class="border-bottom pb-2">
                             <div class="d-flex justify-content-between mb-3">
-                                <h6>Subtotal</h6>
-                                <h6>$150</h6>
+                                <h6>Tổng tiền:</h6>
+                                <h6>${totalCart}</h6>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <h6 class="font-weight-medium">Shipping</h6>
-                                <h6 class="font-weight-medium">$10</h6>
+                                <h6 class="font-weight-medium">Giảm giá</h6>
+                                <h6 class="font-weight-medium">
+                                    <c:choose>
+                                        <c:when test="${not empty sessionScope.appliedVoucher}">
+                                            ${sessionScope.appliedVoucher.discountPercentage} %
+                                        </c:when>
+                                        <c:otherwise>0%</c:otherwise>
+                                    </c:choose>
+                                </h6>
                             </div>
                         </div>
                         <div class="pt-2">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5>Total</h5>
-                                <h5>$160</h5>
+                                <h5>
+                                    <c:set var="discount" value="${not empty sessionScope.appliedVoucher ? (totalCart * sessionScope.appliedVoucher.discountPercentage / 100) : 0}" />
+                                    ${totalCart - discount}
+                                </h5>
                             </div>
-                            <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
+                            <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Thanh toán</button>
                         </div>
+
                     </div>
                 </div>
             </div>
