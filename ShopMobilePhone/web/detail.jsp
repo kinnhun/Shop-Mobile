@@ -199,24 +199,37 @@
 
 
 
+                        <form action="cart" method="post">
 
-                        <div class="d-flex align-items-center mb-4 pt-2">
-                            <div class="input-group quantity mr-3" style="width: 130px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-primary btn-minus">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
+                            <input type="hidden" name="action" value="addCart">
+                            <input type="hidden" name="productId" value="${product.productId}">
+                            <input type="hidden" name="productAttributesId" value="${productAttributesId}">
+
+
+
+                            <div class="d-flex align-items-center mb-4 pt-2">
+                                <div class="input-group quantity mr-3" style="width: 130px;">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-primary btn-minus">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <input name="quantity" type="text" class="form-control bg-secondary border-0 text-center" value="1">
+                                    <div class="input-group-btn">
+                                        <button  type="button" class="btn btn-primary btn-plus">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <input type="text" class="form-control bg-secondary border-0 text-center" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-primary btn-plus">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
+                                <button type="submit" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng </button>
                             </div>
-                            <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
-                                Cart</button>
-                        </div>
+                        </form>
+
+
+
+
+
+
                         <div class="d-flex pt-2">
                             <strong class="text-dark mr-2">Share on:</strong>
                             <div class="d-inline-flex">

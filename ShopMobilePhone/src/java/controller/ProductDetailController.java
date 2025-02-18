@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.ProductAttributes;
 import model.ProductImages;
@@ -93,22 +94,24 @@ public class ProductDetailController extends HttpServlet {
         if (storage != null && color != null) {
             ProductAttributes productAttributesByStorageColor = pdao.getProductAttributesByStorageColor(id, storage, color);
             request.setAttribute("extraPrice", productAttributesByStorageColor.getExtraPrice());
-            
+            request.setAttribute("productAttributesId", productAttributesByStorageColor.getAttributeId());
+
         }
-         List<Products> listTop8NewProduct = pdao.getListTop8NewProduct();
+        List<Products> listTop8NewProduct = pdao.getListTop8NewProduct();
         request.setAttribute("listTop8NewProduct", listTop8NewProduct);
-        
-        
+
         // đánh giá 
         ReviewDAO rdao = new ReviewDAO();
         List<Reviews> listReviewByProductId = rdao.getAllReviewByProductId(id);
         request.setAttribute("listReview", listReviewByProductId);
-        
-        double averageRating  = rdao.getAverageRating(id);
+
+        double averageRating = rdao.getAverageRating(id);
         request.setAttribute("averageRating", averageRating);
-        
 
         request.getRequestDispatcher("detail.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        session.removeAttribute("error");
+        request.removeAttribute("error");
     }
 
     /**

@@ -4,8 +4,10 @@
  */
 package controller;
 
+import dal.CartDAO;
 import dal.CategoriesDAO;
 import dal.FavoriteDAO;
+import dal.OrdersDAO;
 import dal.ProductsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -86,6 +88,10 @@ public class HomeController extends HttpServlet {
             FavoriteDAO fdao = new FavoriteDAO();
             int countFavorite = fdao.countFavoriteByUserId(user.getUserId());
             session.setAttribute("countFavorite", countFavorite);
+            
+            CartDAO cartDao = new CartDAO();
+            int countCart = cartDao.countCartByUserId(user.getUserId());
+            session.setAttribute("countCart", countCart);
         }
 
         request.getRequestDispatcher("home.jsp").forward(request, response);

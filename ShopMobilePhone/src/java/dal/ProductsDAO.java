@@ -443,41 +443,67 @@ public class ProductsDAO extends DBContext {
         return productList;
     }
 
-public List<Products> getListProduct(int categoryId, BigDecimal minPrice, BigDecimal maxPrice) {
-    List<Products> filteredProducts = new ArrayList<>();
+    public List<Products> getListProduct(int categoryId, BigDecimal minPrice, BigDecimal maxPrice) {
+        List<Products> filteredProducts = new ArrayList<>();
 
-    List<Products> allProducts = getListAllProduct();
+        List<Products> allProducts = getListAllProduct();
 
-    // Nếu không có bất kỳ bộ lọc nào, trả về tất cả sản phẩm
-    if (categoryId == 0 && minPrice.compareTo(BigDecimal.ZERO) == 0 && maxPrice.compareTo(BigDecimal.ZERO) == 0) {
-        return allProducts;
+        // Nếu không có bất kỳ bộ lọc nào, trả về tất cả sản phẩm
+        if (categoryId == 0 && minPrice.compareTo(BigDecimal.ZERO) == 0 && maxPrice.compareTo(BigDecimal.ZERO) == 0) {
+            return allProducts;
+        }
+
+        for (Products product : allProducts) {
+            int productCategoryId = product.getCategoryId().getCategoryId();
+            boolean matchesCategory = (categoryId == 0 || productCategoryId == categoryId);
+            boolean matchesPrice = (product.getPrice().compareTo(minPrice) >= 0 && product.getPrice().compareTo(maxPrice) <= 0);
+
+            // Thêm sản phẩm nếu thỏa mãn ít nhất một điều kiện
+            if ((categoryId == 0 || matchesCategory) && (minPrice.compareTo(BigDecimal.ZERO) == 0 && maxPrice.compareTo(BigDecimal.ZERO) == 0 || matchesPrice)) {
+                filteredProducts.add(product);
+            }
+        }
+
+        return filteredProducts;
     }
 
-    for (Products product : allProducts) {
-        int productCategoryId = product.getCategoryId().getCategoryId();
-        boolean matchesCategory = (categoryId == 0 || productCategoryId == categoryId);
-        boolean matchesPrice = (product.getPrice().compareTo(minPrice) >= 0 && product.getPrice().compareTo(maxPrice) <= 0);
+    public ProductAttributes getProductAttributesById(int id) {
+        String query = "SELECT [attribute_id], [product_id], [color], [storage], [size], [extra_price], [stock_quantity] "
+                + "FROM [ProductAttributes] WHERE [attribute_id] = ?";
 
-        // Thêm sản phẩm nếu thỏa mãn ít nhất một điều kiện
-        if ((categoryId == 0 || matchesCategory) && (minPrice.compareTo(BigDecimal.ZERO) == 0 && maxPrice.compareTo(BigDecimal.ZERO) == 0 || matchesPrice)) {
-            filteredProducts.add(product);
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int attributeId = rs.getInt("attribute_id");
+
+                Products product = getProductById(rs.getInt("product_id"));
+
+                String color = rs.getString("color");
+                String storage = rs.getString("storage");
+                String size = rs.getString("size");
+                BigDecimal extraPrice = rs.getBigDecimal("extra_price");
+                int stockQuantity = rs.getInt("stock_quantity");
+
+                return new ProductAttributes(attributeId, product, color, storage, size, extraPrice, stockQuantity);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; 
+    }
+
+    public static void main(String[] args) {
+        ProductsDAO pdao = new ProductsDAO();
+        int categoryId = 2;  // Ví dụ, categoryId = 1
+        BigDecimal minPrice = new BigDecimal("0");
+        BigDecimal maxPrice = new BigDecimal("0");
+
+        List<Products> productList = pdao.getListProduct(categoryId, minPrice, maxPrice);
+        for (Products products : productList) {
+            System.out.println(products.toString());
         }
     }
-
-    return filteredProducts;
-}
-
-   public static void main(String[] args) {
-    ProductsDAO pdao = new ProductsDAO();
-    int categoryId = 2;  // Ví dụ, categoryId = 1
-    BigDecimal minPrice = new BigDecimal("0");  
-    BigDecimal maxPrice = new BigDecimal("0"); 
-
-    List<Products> productList = pdao.getListProduct(categoryId, minPrice, maxPrice);
-    for (Products products : productList) {
-        System.out.println(products.toString());
-    }
-}
-
 
 }

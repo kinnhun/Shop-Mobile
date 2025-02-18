@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.CartDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +12,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import model.Cart;
+import model.Users;
 
 @WebServlet(name = "CartController", urlPatterns = {"/cart"})
 public class CartController extends HttpServlet {
@@ -53,7 +58,25 @@ public class CartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+        Users user = (Users) session.getAttribute("username");
+        if (user == null) {
+            session.setAttribute("error", "Bạn cần đăng nhập trước!");
+            response.sendRedirect("login-register");
+            return;
+
+        }
+
+        CartDAO cartDao = new CartDAO();
+        List<Cart> listCart = cartDao.getAllCart(user.getUserId());
+        request.setAttribute("listCart", listCart);
+
         request.getRequestDispatcher("cart.jsp").forward(request, response);
+        request.removeAttribute("productAttributesId");
+        session.removeAttribute("error");
+        request.removeAttribute("error");
+        return;
     }
 
     /**
@@ -67,7 +90,101 @@ public class CartController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        CartDAO cartDao = new CartDAO();
+        String action = request.getParameter("action");
+
+        if (action == null) {
+            request.setAttribute("error", "Hành động không hợp lệ!");
+            doGet(request, response);
+            return;
+        }
+        if (action.equals("quantity")) {
+
+            try {
+
+                int cartId = Integer.parseInt(request.getParameter("cartId"));
+                int quantity = Integer.parseInt(request.getParameter("quantity"));
+                String operator = request.getParameter("operator");
+
+                // Nếu số lượng = 0 thì xóa giỏ hàng
+                if (quantity == 0) {
+                    if (cartDao.deleteCartById(cartId)) {
+                        request.setAttribute("message", "Xóa sản phẩm khỏi giỏ hàng thành công!");
+                    } else {
+                        request.setAttribute("error", "Xóa sản phẩm thất bại!");
+                    }
+                    doGet(request, response);
+                    return;
+                }
+
+                // Cập nhật số lượng dựa trên thao tác
+                if ("minus".equals(operator)) {
+                    quantity--;
+                } else if ("plus".equals(operator)) {
+                    quantity++;
+                } else {
+                    request.setAttribute("error", "Thao tác không hợp lệ!");
+                    doGet(request, response);
+                    return;
+                }
+
+                // Kiểm tra số lượng hợp lệ trước khi cập nhật
+                if (quantity > 0) {
+                    if (cartDao.updateQuantityByCartId(cartId, quantity)) {
+                        request.setAttribute("message", "Cập nhật số lượng thành công!");
+                    } else {
+                        request.setAttribute("error", "Cập nhật số lượng thất bại!");
+                    }
+                } else {
+                    request.setAttribute("error", "Số lượng không hợp lệ!");
+                }
+
+            } catch (NumberFormatException e) {
+                request.setAttribute("error", "Dữ liệu đầu vào không hợp lệ!");
+            }
+            doGet(request, response);
+            return;
+        }
+
+        if ("addCart".equals(action)) {
+            HttpSession session = request.getSession();
+            Users user = (Users) session.getAttribute("username");
+            if (user == null) {
+                session.setAttribute("error", "Bạn cần đăng nhập trước!");
+                response.sendRedirect("login-register");
+                return;
+
+            }
+            try {
+                int quantity = Integer.parseInt(request.getParameter("quantity"));
+                int productId = Integer.parseInt(request.getParameter("productId"));
+                int productAttributesId = Integer.parseInt(request.getParameter("productAttributesId"));
+
+                // Kiểm tra điều kiện hợp lệ
+                if (quantity <= 0) {
+                    session.setAttribute("error", "Số lượng phải lớn hơn 0!");
+                    response.sendRedirect("detail?id=" + Integer.parseInt(request.getParameter("productId")));
+                    return;
+                }
+
+                // Gọi DAO để thêm vào giỏ hàng
+                boolean isAdded = cartDao.addToCart(user.getUserId(), productId, productAttributesId, quantity);
+
+                if (isAdded) {
+                    request.setAttribute("message", "Sản phẩm đã được thêm vào giỏ hàng!");
+                } else {
+                    request.setAttribute("error", "Không thể thêm sản phẩm vào giỏ hàng!");
+                }
+            } catch (NumberFormatException e) {
+                session.setAttribute("error", "Bạn phải chọn dung lượng, màu máy!");
+                response.sendRedirect("detail?id=" + Integer.parseInt(request.getParameter("productId")));
+                return;
+
+            }
+
+            doGet(request, response);
+        }
+
     }
 
     /**
