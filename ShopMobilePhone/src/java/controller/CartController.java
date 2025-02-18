@@ -250,6 +250,16 @@ public class CartController extends HttpServlet {
 
             doGet(request, response);
         }
+        if ("remove".equals(action)) {
+            int cartId = Integer.parseInt(request.getParameter("cartId"));
+            if (cartDao.deleteCartById(cartId)) {
+                request.setAttribute("message", "Xóa sản phẩm khỏi giỏ hàng thành công!");
+            } else {
+                request.setAttribute("error", "Xóa sản phẩm thất bại!");
+            }
+            doGet(request, response);
+            return;
+        }
 
     }
 

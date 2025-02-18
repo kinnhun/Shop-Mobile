@@ -100,9 +100,23 @@
                                         </script>
                                     </td>
                                     <td class="align-middle">${(listCart.productId.price + listCart.attributeId.extraPrice) * listCart.quantity} VND</td>
-                                    <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
+
+                                    <td class="align-middle">
+                                        <form action="cart" method="post" onsubmit="return confirmDelete()">
+                                            <input name="action" value="remove" hidden="">
+                                            <input name="cartId" value="${listCart.cartId}" hidden="">
+                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             </c:forEach>
+                        <script>
+                            function confirmDelete() {
+                                return confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi danh sách?");
+                            }
+                        </script>
 
 
 
