@@ -124,7 +124,7 @@ public class CartDAO extends DBContext {
             checkStmt.setInt(2, productId);
             checkStmt.setInt(3, productAttributesId);
             ResultSet rs = checkStmt.executeQuery();
-            return rs.next(); 
+            return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -159,5 +159,27 @@ public class CartDAO extends DBContext {
         }
     }
 
-   
+    public boolean deleteAllCartByUserId(int userId) {
+        String query = "DELETE FROM Cart WHERE user_id = ?";
+        boolean isDeleted = false;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            int rowsAffected = stmt.executeUpdate();
+            isDeleted = rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isDeleted;
+    }
+
+    public static void main(String[] args) {
+        CartDAO cartdao = new CartDAO();
+        List<Cart> cartList = cartdao.getAllCart(1);
+        for (Cart cart : cartList) {
+            System.out.println(cart.toString());
+        }
+    }
+
 }

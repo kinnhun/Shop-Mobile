@@ -164,7 +164,11 @@
                                     ${totalCart - discount}
                                 </h5>
                             </div>
-                            <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Thanh toán</button>
+                            <a href="checkout">
+                                <button type="submit" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Thanh toán</button>
+
+                            </a>
+
                         </div>
 
                     </div>

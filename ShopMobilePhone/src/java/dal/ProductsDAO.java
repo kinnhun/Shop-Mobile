@@ -491,19 +491,52 @@ public class ProductsDAO extends DBContext {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null; 
+        return null;
     }
 
-    public static void main(String[] args) {
-        ProductsDAO pdao = new ProductsDAO();
-        int categoryId = 2;  // Ví dụ, categoryId = 1
-        BigDecimal minPrice = new BigDecimal("0");
-        BigDecimal maxPrice = new BigDecimal("0");
+    public boolean updateQuanityOrderByProductId(int productId, int attributeId, int quantity) {
+        ProductsDAO productDao = new ProductsDAO();
 
-        List<Products> productList = pdao.getListProduct(categoryId, minPrice, maxPrice);
-        for (Products products : productList) {
-            System.out.println(products.toString());
+        boolean checkUpdateQuantityProduct = productDao.updateQuantityProduct(productId, quantity);
+        boolean checkUpdateQuanityProductAttribute = productDao.updateQuanityProductAttribute(attributeId, quantity);
+
+        return checkUpdateQuantityProduct && checkUpdateQuanityProductAttribute;
+    }
+
+    public boolean updateQuantityProduct(int productId, int quantity) {
+        String sql = "UPDATE Products "
+                + "SET stock_quantity = stock_quantity - ?, "
+                + "    sold_quantity = sold_quantity + ? "
+                + "WHERE product_id = ? AND stock_quantity >= ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, quantity); 
+            stmt.setInt(2, quantity); 
+            stmt.setInt(3, productId);
+            stmt.setInt(4, quantity); 
+
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return false;
+    }
+
+    public boolean updateQuanityProductAttribute(int attributeId, int quantity) {
+        String sql = "UPDATE ProductAttributes SET stock_quantity = stock_quantity - ? WHERE attribute_id = ? AND stock_quantity >= ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, quantity);
+            stmt.setInt(2, attributeId);
+            stmt.setInt(3, quantity);
+
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

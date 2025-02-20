@@ -40,7 +40,7 @@
                     <nav class="breadcrumb bg-light mb-30">
                         <a class="breadcrumb-item text-dark" href="#">Home</a>
                         <a class="breadcrumb-item text-dark" href="#">Shop</a>
-                        <span class="breadcrumb-item active">Shopping favorites </span>
+                        <span class="breadcrumb-item active">Orders </span>
                     </nav>
                 </div>
             </div>
@@ -57,56 +57,48 @@
 
 
                 <div class="col-lg-8 table-responsive mb-5">
-                    <table id="favoritesTable"  class="align-middle table table-light table-borderless table-hover text-center mb-0">
+                    <table id="ordersTable" class="align-middle table table-light table-borderless table-hover text-center mb-0">
                         <thead class="thead-dark">
                             <tr>
-                                <th>Sản phẩm </th>
+                                <th>ID Đơn hàng</th>
                                 <th>Giá</th>
-                                <th>Bỏ yêu thích</th>
+                                <th>Trạng thái</th>
+                                <th>Địa chỉ giao hàng</th>
+                                <th>Ngày tạo</th>
+                                <th>Xem chi tiết</th>
                             </tr>
                         </thead>
                         <tbody class="align-middle">
                             <c:choose>
-                                <c:when test="${empty listFavorites}">
+                                <c:when test="${empty listOrders}">
                                     <tr>
-                                        <td colspan="3" class="text-center">Không có sản phẩm nào trong danh sách yêu thích.</td>
+                                        <td colspan="6" class="text-center">Không có đơn đặt hàng nào.</td>
                                     </tr>
                                 </c:when>
                                 <c:otherwise>
-                                    <c:forEach var="listFavorites" items="${listFavorites}">
+                                    <c:forEach var="order" items="${listOrders}" varStatus="loop">
                                         <tr>
+                                            <td class="align-middle">${loop.index + 1}</td>
+                                            <td class="align-middle">${order.totalPrice} VND</td>
+                                            <td class="align-middle">${order.status}</td>
+                                            <td class="align-middle">${order.shippingAddress}</td>
+                                            <td class="align-middle">${order.createdAt}</td>
                                             <td class="align-middle">
-                                                <img src="${listFavorites.productId.productImage}" alt="" style="width: 50px;">
-                                                ${listFavorites.productId.name}
+                                                <form action="order" method="get">
+                                                    <input name="action" value="orderDetail" hidden="">
+                                                    <input hidden="" type="text" name="orderId" value="${order.orderId}">
+                                                    <button type="submit" class="btn btn-sm btn-info">
+                                                        <i class="fa fa-eye"></i> Xem chi tiết
+                                                    </button>
+                                                </form>
                                             </td>
-                                            <td class="align-middle">${listFavorites.productId.price} vnd</td>  
-                                    <script>
-
-                                    </script>
-                                    <td class="align-middle">
-                                        <form action="favorites" method="post" onsubmit="return confirmDelete()">
-                                            <input name="action" value="remove" hidden="">
-                                            <input name="favoriteId" value="${listFavorites.favoriteId}" hidden="">
-                                            <button type="submit" class="btn btn-sm btn-danger">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                    </tr>
-                                </c:forEach>
-                            </c:otherwise>
-                        </c:choose>
-
-                        <script>
-                            function confirmDelete() {
-                                return confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi danh sách yêu thích?");
-                            }
-                        </script>
-
-
-
+                                        </tr>
+                                    </c:forEach>
+                                </c:otherwise>
+                            </c:choose>
                         </tbody>
                     </table>
+
 
 
                     <div class="col-12">
@@ -119,11 +111,11 @@
                     </div>
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
-                            const productsPerPage = 5;
+                            const productsPerPage = 4;
                             let currentPage = 1;
 
                             // Lấy danh sách các hàng trong bảng (bỏ qua hàng tiêu đề)
-                            const products = document.querySelectorAll('#favoritesTable tbody tr');
+                            const products = document.querySelectorAll('#ordersTable tbody tr');
                             const totalProducts = products.length;
                             const totalPages = Math.ceil(totalProducts / productsPerPage);
 
