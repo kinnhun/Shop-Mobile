@@ -89,6 +89,9 @@ public class ShopController extends HttpServlet {
         if (listProduct.isEmpty()) {
             request.setAttribute("error", "Không có sản phẩm nào.");
         }
+        
+        
+        
 
         if (request.getParameter("sortPrice") != null) {
             String sortPrice = request.getParameter("sortPrice");

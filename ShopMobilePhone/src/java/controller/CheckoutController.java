@@ -6,6 +6,7 @@ package controller;
 
 import dal.CartDAO;
 import dal.OrdersDAO;
+import dal.VouchersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import model.Cart;
 import model.Users;
+import model.Vouchers;
 
 @WebServlet(name = "CheckoutController", urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
@@ -135,13 +137,20 @@ public class CheckoutController extends HttpServlet {
         OrdersDAO odao = new OrdersDAO();
         boolean checkAddOrder = odao.addOrder(user.getUserId(), totalPrice, "Pending", shippingAddress.trim());
 
+        // trừ đi voucher
+        Vouchers appliedVoucher = (Vouchers) session.getAttribute("appliedVoucher");
+        System.out.println(appliedVoucher.toString());
+        appliedVoucher.setMaxUsage(appliedVoucher.getMaxUsage() - 1);
+
+        
+        VouchersDAO vdao = new VouchersDAO();
+        boolean updateVoucher = vdao.updateVoucher(appliedVoucher);
+
         if (checkAddOrder) {
 
             // thêm vào orderDetal 
             boolean checkAddOrderDetail = odao.addOrderDetailByUserId(user.getUserId());
-            
-            
-            
+
             session.setAttribute("message", "Đặt hàng thành công!");
             response.sendRedirect("order");
         } else {

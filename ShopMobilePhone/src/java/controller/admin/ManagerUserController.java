@@ -2,13 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.admin;
 
-import dal.CartDAO;
-import dal.CategoriesDAO;
-import dal.FavoriteDAO;
-import dal.OrdersDAO;
-import dal.ProductsDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,16 +14,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.Categories;
-import model.Products;
 import model.Users;
 
-/**
- *
- * @author trung
- */
-@WebServlet(name = "HomeController", urlPatterns = {"/home"})
-public class HomeController extends HttpServlet {
+@WebServlet(name = "ManagerUserController", urlPatterns = {"/admin/manager-user"})
+public class ManagerUserController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +36,10 @@ public class HomeController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeController</title>");
+            out.println("<title>Servlet ManagerUserController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ManagerUserController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -67,36 +57,28 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // xóa mees vs error 
-        request.getSession().removeAttribute("message");
-        request.getSession().removeAttribute("error");
 
-        
-        CategoriesDAO cdao = new CategoriesDAO();
-        List<Categories> listCategories = cdao.getAllCategories();
         HttpSession session = request.getSession();
-        session.setAttribute("listCategories", listCategories);
-
-        ProductsDAO pdao = new ProductsDAO();
-        List<Products> listTop8Product = pdao.getListTop8BestSellProduct();
-        request.setAttribute("listTop8Product", listTop8Product);
-
-        List<Products> listTop8NewProduct = pdao.getListTop8NewProduct();
-        request.setAttribute("listTop8NewProduct", listTop8NewProduct);
-
-        // hiển thị ra số lượng tym cart
         Users user = (Users) session.getAttribute("username");
-        if (user != null) {
-            FavoriteDAO fdao = new FavoriteDAO();
-            int countFavorite = fdao.countFavoriteByUserId(user.getUserId());
-            session.setAttribute("countFavorite", countFavorite);
-            
-            CartDAO cartDao = new CartDAO();
-            int countCart = cartDao.countCartByUserId(user.getUserId());
-            session.setAttribute("countCart", countCart);
-        }
 
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        if (user == null) {
+            session.setAttribute("error", "Bạn cần đăng nhập trước!");
+            response.sendRedirect("../login-register");
+            return;
+        }
+        if (!"admin".equals(user.getRole())) {
+            session.setAttribute("error", "Bạn không có quyền truy cập!");
+            response.sendRedirect("../home");
+            return;
+        }
+        
+
+        UserDAO userDao = new UserDAO();
+        List<Users> listUsers = userDao.getAllUser();
+        request.setAttribute("listUsers", listUsers);
+
+        request.getRequestDispatcher("manager_user.jsp").forward(request, response);
+        session.removeAttribute("error");
     }
 
     /**
@@ -110,7 +92,27 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        UserDAO userDao = new UserDAO();
+
+        int userId = Integer.parseInt(request.getParameter("user_id"));
+        String fullName = request.getParameter("full_name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+        String role = request.getParameter("role");
+        String status = request.getParameter("status");
+
+        boolean success = userDao.updateUser(userId, fullName, email, phone, address, role, status);
+
+        if (success) {
+            request.setAttribute("message", "Sủa user thành công!");
+            doGet(request, response);
+
+        } else {
+            request.setAttribute("error", "Sửa thất bại!");
+            doGet(request, response);
+        }
+        return;
     }
 
     /**

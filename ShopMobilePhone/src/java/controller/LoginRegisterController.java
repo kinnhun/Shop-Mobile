@@ -111,6 +111,9 @@ public class LoginRegisterController extends HttpServlet {
             Users user = userDAO.authenticateUser(username, password);
 
             if (user != null) {
+
+              
+
                 HttpSession session = request.getSession();
                 session.setAttribute("username", user);
 

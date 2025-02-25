@@ -4,6 +4,7 @@
  */
 package dal;
 
+import java.beans.Statement;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -510,10 +511,10 @@ public class ProductsDAO extends DBContext {
                 + "WHERE product_id = ? AND stock_quantity >= ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, quantity); 
-            stmt.setInt(2, quantity); 
+            stmt.setInt(1, quantity);
+            stmt.setInt(2, quantity);
             stmt.setInt(3, productId);
-            stmt.setInt(4, quantity); 
+            stmt.setInt(4, quantity);
 
             int rowsUpdated = stmt.executeUpdate();
             return rowsUpdated > 0;
@@ -537,6 +538,93 @@ public class ProductsDAO extends DBContext {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public boolean createProduct(String name, int categoryId, BigDecimal price, String description, String status, String[] productImages) {
+        String insertProductSQL = "INSERT INTO Products (category_id, name, description, price, stock_quantity, status, created_at, updated_at, sold_quantity) "
+                + "VALUES (?, ?, ?, ?, 0, ?, GETDATE(), GETDATE(), 0)";
+        String insertImageSQL = "INSERT INTO ProductImages (product_id, image_url) VALUES (?, ?)";
+
+        try (PreparedStatement stmt = connection.prepareStatement(insertProductSQL)) {
+            // Thêm sản phẩm mới
+            stmt.setInt(1, categoryId);
+            stmt.setString(2, name);
+            stmt.setString(3, description);
+            stmt.setBigDecimal(4, price);
+            stmt.setString(5, status);
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows > 0) {
+
+                ProductsDAO pdao = new ProductsDAO();
+                int productId = pdao.getTop1NewProduct();
+
+                // Thêm ảnh sản phẩm
+                try (PreparedStatement imgStmt = connection.prepareStatement(insertImageSQL)) {
+                    for (String imageUrl : productImages) {
+                        imgStmt.setInt(1, productId);
+                        imgStmt.setString(2, imageUrl);
+                        imgStmt.executeUpdate();
+                    }
+                }
+                return true;
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public int getTop1NewProduct() {
+        String sql = "SELECT TOP 1 product_id FROM Products ORDER BY created_at DESC";
+        try (PreparedStatement stmt = connection.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt("product_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public boolean updateProduct(int productId, String name, String description, BigDecimal price, String status) {
+        String sql = "UPDATE Products SET name = ?, description = ?, price = ?, status = ?, updated_at = GETDATE() WHERE product_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, name);
+            stmt.setString(2, description);
+            stmt.setBigDecimal(3, price);
+            stmt.setString(4, status);
+            stmt.setInt(5, productId);
+
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        ProductsDAO productDAO = new ProductsDAO();
+        String name = "Laptop Gaming";
+        int categoryId = 1;
+        BigDecimal price = new BigDecimal("99999999");
+        String description = "Laptop gaming mạnh mẽ với RTX 4060";
+        String status = "active";
+        String[] productImages = {
+            "https://example.com/image1.jpg",
+            "https://example.com/image2.jpg"
+        };
+
+        boolean result = productDAO.createProduct(name, categoryId, price, description, status, productImages);
+
+        if (result) {
+            System.out.println("✅ Thêm sản phẩm thành công!");
+        } else {
+            System.out.println("❌ Thêm sản phẩm thất bại!");
+        }
     }
 
 }

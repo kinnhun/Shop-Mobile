@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import model.Users;
 
 public class UserDAO extends DBContext {
@@ -119,6 +121,55 @@ public class UserDAO extends DBContext {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<Users> getAllUser() {
+        List<Users> userList = new ArrayList<>();
+        String sql = "SELECT user_id, full_name, email, password, phone, address, avatar, role, status, last_login, created_at, updated_at FROM Users";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Users user = new Users(
+                        rs.getInt("user_id"),
+                        rs.getString("full_name"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("phone"),
+                        rs.getString("address"),
+                        rs.getString("avatar"),
+                        rs.getString("role"),
+                        rs.getString("status"),
+                        rs.getTimestamp("last_login"),
+                        rs.getTimestamp("created_at"),
+                        rs.getTimestamp("updated_at")
+                );
+                userList.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+
+    public boolean updateUser(int userId, String fullName, String email, String phone, String address, String role, String status) {
+        String query = "UPDATE users SET full_name = ?, email = ?, phone = ?, address = ?, role = ?, status = ? WHERE user_id = ?";
+        try ( PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setString(1, fullName);
+            ps.setString(2, email);
+            ps.setString(3, phone);
+            ps.setString(4, address);
+            ps.setString(5, role);
+            ps.setString(6, status);
+            ps.setInt(7, userId);
+
+            int updatedRows = ps.executeUpdate();
+            return updatedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

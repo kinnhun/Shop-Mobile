@@ -42,6 +42,14 @@ public class Products {
         this.soldQuantity = soldQuantity;
     }
 
+    public int getSoldQuantity() {
+        return soldQuantity;
+    }
+
+    public void setSoldQuantity(int soldQuantity) {
+        this.soldQuantity = soldQuantity;
+    }
+
  
     public int getProductId() {
         return productId;
