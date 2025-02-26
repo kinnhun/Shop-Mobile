@@ -120,11 +120,11 @@ public class OrdersDAO extends DBContext {
     }
 
     private boolean processOrderDetail(Orders order, Cart cart, BigDecimal totalPrice) {
-        
+
         ProductsDAO productDao = new ProductsDAO();
-        
-        boolean updateQuantity =productDao.updateQuanityOrderByProductId(cart.getProductId().getProductId(),cart.getAttributeId().getAttributeId(),cart.getQuantity());
-        if(updateQuantity== false){
+
+        boolean updateQuantity = productDao.updateQuanityOrderByProductId(cart.getProductId().getProductId(), cart.getAttributeId().getAttributeId(), cart.getQuantity());
+        if (updateQuantity == false) {
             return false;
         }
         return insertOrderDetail(
@@ -247,12 +247,54 @@ public class OrdersDAO extends DBContext {
         return null;
     }
 
-    
+    public List<Orders> getAllOrder() {
+        List<Orders> ordersList = new ArrayList<>();
+        String sql = "SELECT order_id, user_id, total_price, status, shipping_address, created_at, updated_at FROM Orders ORDER BY created_at DESC";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
+            UserDAO userDao = new UserDAO();
+
+            while (rs.next()) {
+                Users user = userDao.getUserById(rs.getInt("user_id"));
+                Orders order = new Orders(
+                        rs.getInt("order_id"),
+                        user,
+                        rs.getBigDecimal("total_price"),
+                        rs.getString("status"),
+                        rs.getString("shipping_address"),
+                        rs.getTimestamp("created_at"),
+                        rs.getTimestamp("updated_at")
+                );
+                ordersList.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ordersList;
+    }
+
+    public boolean updateStatus(String status, int orderId) {
+        String sql = "UPDATE Orders SET status = ?, updated_at = GETDATE() WHERE order_id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, status);
+            ps.setInt(2, orderId);
+
+            int rowsUpdated = ps.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         OrdersDAO orderDao = new OrdersDAO();
-        List<OrderDetails> listOrderDetail = orderDao.getOrderDetailByOrderId(22);
-        for (Object object : listOrderDetail) {
-            System.out.println(object.toString());
+        List<OrderDetails> orderDetailsList = orderDao.getOrderDetailByOrderId(22);
+        for (OrderDetails orderDetails : orderDetailsList) {
+            System.out.println(orderDetails.toString());
         }
     }
+
 }

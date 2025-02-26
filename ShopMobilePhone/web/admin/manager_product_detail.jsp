@@ -137,21 +137,94 @@
                                                             <td>${attr.stockQuantity}</td>
                                                             <td>
                                                                 <!-- Nút sửa thuộc tính -->
-                                                                <a href="edit-attribute?attributeId=${attr.attributeId}" class="btn btn-sm btn-primary">
+                                                                <button class="btn btn-sm btn-primary edit-btn"
+                                                                        data-id="${attr.attributeId}"
+                                                                        data-color="${attr.color}"
+                                                                        data-storage="${attr.storage}"
+                                                                        data-price="${attr.extraPrice}"
+                                                                        data-stock="${attr.stockQuantity}">
                                                                     <i class="fas fa-edit"></i> Sửa
-                                                                </a>
+                                                                </button>
                                                             </td>
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
 
+                                            <!-- Modal Chỉnh sửa (Đặt ngoài vòng lặp) -->
+                                            <div class="modal fade" id="editAttributeModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="editModalLabel">Chỉnh sửa thuộc tính</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="manager-product" method="post">
+                                                                <input hidden="" name="attributeId" id="editAttributeId">
+                                                                <input name="action" value="edit-attribute" hidden="">
+                                                                <input name="productId" value="${product.productId}" hidden="">
+                                                                
+                                                                <div class="mb-3">
+                                                                    <label for="color" class="form-label">Màu sắc</label>
+                                                                    <input type="text" class="form-control" name="color" id="editColor" required>
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="storage" class="form-label">Dung lượng</label>
+                                                                    <input type="text" class="form-control" name="storage" id="editStorage" required>
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="extraPrice" class="form-label">Giá thêm (VND)</label>
+                                                                    <input type="number" class="form-control" name="extraPrice" id="editExtraPrice" required>
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="stockQuantity" class="form-label">Số lượng</label>
+                                                                    <input type="number" class="form-control" name="stockQuantity" id="editStockQuantity" required>
+                                                                </div>
+
+                                                                <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- JavaScript để điền dữ liệu vào modal -->
+                                            <script>
+                                                document.addEventListener("DOMContentLoaded", function () {
+                                                    document.querySelectorAll(".edit-btn").forEach(button => {
+                                                        button.addEventListener("click", function () {
+                                                            let attributeId = this.getAttribute("data-id");
+                                                            let color = this.getAttribute("data-color");
+                                                            let storage = this.getAttribute("data-storage");
+                                                            let extraPrice = this.getAttribute("data-price");
+                                                            let stockQuantity = this.getAttribute("data-stock");
+
+                                                            document.getElementById("editAttributeId").value = attributeId;
+                                                            document.getElementById("editColor").value = color;
+                                                            document.getElementById("editStorage").value = storage;
+                                                            document.getElementById("editExtraPrice").value = extraPrice;
+                                                            document.getElementById("editStockQuantity").value = stockQuantity;
+
+                                                            // Hiển thị modal
+                                                            let modal = new bootstrap.Modal(document.getElementById("editAttributeModal"));
+                                                            modal.show();
+                                                        });
+                                                    });
+                                                });
+                                            </script>
+
                                             <!-- Nút thêm thuộc tính -->
                                             <div class="text-center mt-3">
-                                                <a href="add-attribute?productId=${product.productId}" class="btn btn-success">
+                                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAttributeModal">
                                                     <i class="fas fa-plus"></i> Thêm thuộc tính
-                                                </a>
+                                                </button>
                                             </div>
+
                                         </div>
 
                                         <!-- Nút quay lại danh sách -->
@@ -168,6 +241,49 @@
                 </div>
             </div>
 
+            <!-- Modal Thêm Thuộc Tính -->
+            <div class="modal fade" id="addAttributeModal" tabindex="-1" aria-labelledby="addAttributeModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addAttributeModalLabel">Thêm Thuộc Tính Sản Phẩm</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addAttributeForm" action="manager-product" method="POST">
+                                <input name="action" value="add-attribute" hidden="">
+                                <!-- ID sản phẩm ẩn -->
+                                <input type="hidden" name="productId" value="${product.productId}">
+
+                                <div class="mb-3">
+                                    <label for="color" class="form-label">Màu sắc:</label>
+                                    <input type="text" class="form-control" id="color" name="color" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="storage" class="form-label">Dung lượng:</label>
+                                    <input type="text" class="form-control" id="storage" name="storage" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="extraPrice" class="form-label">Giá thêm (VND):</label>
+                                    <input type="number" class="form-control" id="extraPrice" name="extraPrice" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="stockQuantity" class="form-label">Số lượng:</label>
+                                    <input type="number" class="form-control" id="stockQuantity" name="stockQuantity" required>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
             <div class="footer">

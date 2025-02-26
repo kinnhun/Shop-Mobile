@@ -606,6 +606,84 @@ public class ProductsDAO extends DBContext {
         return false;
     }
 
+    public boolean addProductAttribute(int productId, String color, String storage, BigDecimal extraPrice, int stockQuantity) {
+        String sql = "INSERT INTO ProductAttributes (product_id, color, storage, extra_price, stock_quantity) VALUES (?, ?, ?, ?, ?)";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, productId);
+            stmt.setString(2, color);
+            stmt.setString(3, storage);
+            stmt.setBigDecimal(4, extraPrice);
+            stmt.setInt(5, stockQuantity);
+
+            int rowsInserted = stmt.executeUpdate();
+
+            if (rowsInserted > 0) {
+                // Nếu thêm thành công, cập nhật tổng số lượng sản phẩm
+                ProductsDAO productDAO = new ProductsDAO();
+                int totalQuantity = 0;
+                List<ProductAttributes> listProductAttributes = productDAO.getProductAttributesByProductId(productId);
+
+                for (ProductAttributes attribute : listProductAttributes) {
+                    totalQuantity += attribute.getStockQuantity();
+                }
+
+                boolean checkUpdateQuantity = productDAO.updateQuantityProduct1(productId, totalQuantity);
+
+                return checkUpdateQuantity;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private boolean updateQuantityProduct1(int productId, int totalQuantity) {
+        String sql = "UPDATE Products SET stock_quantity = ? WHERE product_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, totalQuantity);
+            stmt.setInt(2, productId);
+
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updateAttribute(int attributeId, String color, String storage, double extraPrice, int stockQuantity, int productId) {
+        String sql = "UPDATE ProductAttributes SET color = ?, storage = ?, extra_price = ?, stock_quantity = ? WHERE attribute_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, color);
+            stmt.setString(2, storage);
+            stmt.setBigDecimal(3, BigDecimal.valueOf(extraPrice));
+            stmt.setInt(4, stockQuantity);
+            stmt.setInt(5, attributeId);
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                ProductsDAO productDAO = new ProductsDAO();
+                int totalQuantity = 0;
+                List<ProductAttributes> listProductAttributes = productDAO.getProductAttributesByProductId(productId);
+
+                for (ProductAttributes attribute : listProductAttributes) {
+                    totalQuantity += attribute.getStockQuantity();
+                }
+
+                boolean checkUpdateQuantity = productDAO.updateQuantityProduct1(productId, totalQuantity);
+
+                return checkUpdateQuantity;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         ProductsDAO productDAO = new ProductsDAO();
         String name = "Laptop Gaming";

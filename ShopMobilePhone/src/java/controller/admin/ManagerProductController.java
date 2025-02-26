@@ -143,9 +143,7 @@ public class ManagerProductController extends HttpServlet {
                 request.setAttribute("error", "Có lỗi xảy ra. Vui lòng thử lại.");
                 request.getRequestDispatcher("error.jsp").forward(request, response);
             }
-        }
-
-        if (action.equals("edit-product")) {
+        } else if (action.equals("edit-product")) {
             try {
                 int productId = Integer.parseInt(request.getParameter("productId"));
                 String name = request.getParameter("name");
@@ -169,6 +167,68 @@ public class ManagerProductController extends HttpServlet {
                 e.printStackTrace();
                 request.setAttribute("error", "Lỗi xử lý dữ liệu!");
                 response.sendRedirect("manager-product?action=detail&id=" + Integer.parseInt(request.getParameter("productId")));
+            }
+        } else if (action.equals("add-attribute")) {
+            try {
+                int productId = Integer.parseInt(request.getParameter("productId"));
+                String color = request.getParameter("color");
+                String storage = request.getParameter("storage");
+                BigDecimal extraPrice = new BigDecimal(request.getParameter("extraPrice"));
+                int stockQuantity = Integer.parseInt(request.getParameter("stockQuantity"));
+                ProductsDAO productDAO = new ProductsDAO();
+
+                List<ProductAttributes> listProductAttributes = productDAO.getProductAttributesByProductId(productId);
+                for (ProductAttributes listProductAttribute : listProductAttributes) {
+                    if (color.equals(listProductAttribute.getColor()) && storage.equals(listProductAttribute.getStorage())) {
+                        session.setAttribute("error", "Đã tồn tai!");
+
+                        response.sendRedirect("manager-product?action=detail&id=" + productId);
+                        return;
+                    }
+                }
+
+                boolean success = productDAO.addProductAttribute(productId, color, storage, extraPrice, stockQuantity);
+
+                if (success) {
+                    session.setAttribute("message", "Thêm thành công!");
+
+                    response.sendRedirect("manager-product?action=detail&id=" + productId);
+                } else {
+                    session.setAttribute("error", "Thêm thất bại!");
+
+                    response.sendRedirect("manager-product?action=detail&id=" + productId);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.sendRedirect("edit-product?error=invalid-input");
+            }
+        } else if (action.equals("edit-attribute")) {
+            try {
+                if (action.equals("edit-attribute")) {
+                    // Lấy dữ liệu từ form
+                    int attributeId = Integer.parseInt(request.getParameter("attributeId"));
+                    String color = request.getParameter("color");
+                    String storage = request.getParameter("storage");
+                    double extraPrice = Double.parseDouble(request.getParameter("extraPrice"));
+                    int stockQuantity = Integer.parseInt(request.getParameter("stockQuantity"));
+
+                    // Gọi DAO để cập nhật thuộc tính sản phẩm
+                    ProductsDAO attributeDAO = new ProductsDAO();
+                    int productId = Integer.parseInt(request.getParameter("productId"));
+                    boolean isUpdated = attributeDAO.updateAttribute(attributeId, color, storage, extraPrice, stockQuantity,productId);
+
+                    if (isUpdated) {
+                        session.setAttribute("message", "Cập nhật thành công!");
+                    } else {
+                        session.setAttribute("error", "Cập nhật thất bại!");
+                    }
+
+                    response.sendRedirect("manager-product?action=detail&id=" + request.getParameter("productId"));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                request.setAttribute("error", "Có lỗi xảy ra!");
+                request.getRequestDispatcher("manager-product.jsp").forward(request, response);
             }
         }
     }
