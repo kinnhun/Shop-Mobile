@@ -89,9 +89,6 @@ public class ShopController extends HttpServlet {
         if (listProduct.isEmpty()) {
             request.setAttribute("error", "Không có sản phẩm nào.");
         }
-        
-        
-        
 
         if (request.getParameter("sortPrice") != null) {
             String sortPrice = request.getParameter("sortPrice");
@@ -123,6 +120,15 @@ public class ShopController extends HttpServlet {
         request.setAttribute("min", minPrice);
         request.setAttribute("max", maxPrice);
         request.setAttribute("categoryId", categoryId);
+
+        if (request.getParameter("action") != null) {
+            String action = request.getParameter("action");
+            if (action.equals("search")) {
+                String searchText = request.getParameter("searchText");
+                listProduct = pdao.getProductByName(searchText);
+
+            }
+        }
 
         request.setAttribute("listProduct", listProduct);
 

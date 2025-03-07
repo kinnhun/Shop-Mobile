@@ -684,25 +684,73 @@ public class ProductsDAO extends DBContext {
         return false;
     }
 
-    public static void main(String[] args) {
-        ProductsDAO productDAO = new ProductsDAO();
-        String name = "Laptop Gaming";
-        int categoryId = 1;
-        BigDecimal price = new BigDecimal("99999999");
-        String description = "Laptop gaming mạnh mẽ với RTX 4060";
-        String status = "active";
-        String[] productImages = {
-            "https://example.com/image1.jpg",
-            "https://example.com/image2.jpg"
-        };
+    public List<Products> getProductByName(String searchText) {
+        List<Products> productList = new ArrayList<>();
+        String sql = "SELECT p.product_id, p.category_id, p.name, p.description, p.price, p.stock_quantity, "
+                + "p.status, p.created_at, p.updated_at, p.sold_quantity, "
+                + "(SELECT TOP 1 pi.image_url FROM ProductImages pi WHERE pi.product_id = p.product_id) AS product_image "
+                + "FROM Products p "
+                + "WHERE p.name LIKE ? "
+                + "ORDER BY p.created_at DESC";
 
-        boolean result = productDAO.createProduct(name, categoryId, price, description, status, productImages);
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, "%" + searchText + "%"); // Tìm kiếm tương đối
 
-        if (result) {
-            System.out.println("✅ Thêm sản phẩm thành công!");
-        } else {
-            System.out.println("❌ Thêm sản phẩm thất bại!");
+            try (ResultSet rs = ps.executeQuery()) {
+                CategoriesDAO categoriesDAO = new CategoriesDAO();
+
+                while (rs.next()) {
+                    int productId = rs.getInt("product_id");
+                    int categoryId = rs.getInt("category_id");
+                    String name = rs.getString("name");
+                    String description = rs.getString("description");
+                    java.math.BigDecimal price = rs.getBigDecimal("price");
+                    int stockQuantity = rs.getInt("stock_quantity");
+                    int soldQuantity = rs.getInt("sold_quantity");
+                    String status = rs.getString("status");
+                    java.util.Date createdAt = rs.getTimestamp("created_at");
+                    java.util.Date updatedAt = rs.getTimestamp("updated_at");
+                    String productImage = rs.getString("product_image");
+
+                    Categories category = categoriesDAO.getCategoryById(categoryId);
+
+                    Products product = new Products(productId, category, name, description, price, stockQuantity, status, createdAt, updatedAt, productImage, soldQuantity);
+                    productList.add(product);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+        return productList;
+    }
+
+    public int totalQuanityInStock() {
+        String sql = "SELECT SUM(stock_quantity) FROM Products";
+        try (PreparedStatement ps = connection.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int totalQuantityToShip() {
+        String sql = "SELECT SUM(od.quantity) "
+                + "FROM OrderDetails od "
+                + "JOIN Orders o ON od.order_id = o.order_id "
+                + "WHERE o.status = 'pending'";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }

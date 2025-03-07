@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Cart;
 import model.Categories;
 import model.Favorites;
@@ -289,11 +291,84 @@ public class OrdersDAO extends DBContext {
         return false;
     }
 
+    public int totalOrder() {
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM orders";
+        try (PreparedStatement stmt = connection.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
+    public int totalOrderStatus(String status) {
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM orders WHERE status = ?";
+        try (
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, status);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    total = rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
+    public List<Object[]> getProductSalesByMonth() throws SQLException {
+        List<Object[]> salesData = new ArrayList<>();
+
+        String query = "SELECT YEAR(o.created_at) AS year, \n"
+                + "       MONTH(o.created_at) AS month, \n"
+                + "       SUM(od.quantity) AS total_quantity_sold\n"
+                + "FROM [PhoneStore].[dbo].[Orders] o\n"
+                + "JOIN [PhoneStore].[dbo].[OrderDetails] od \n"
+                + "    ON o.order_id = od.order_id\n"
+                + "WHERE o.status = 'shipped'\n"
+                + "GROUP BY YEAR(o.created_at), MONTH(o.created_at)\n"
+                + "ORDER BY year DESC, month ASC;";
+
+        // Execute the query
+        try (PreparedStatement ps = connection.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Object[] row = new Object[3];
+                row[0] = rs.getInt("year");
+                row[1] = rs.getInt("month");
+                row[2] = rs.getInt("total_quantity_sold");
+
+                // Add the row to the salesData list
+                salesData.add(row);
+            }
+        }
+
+        // Return the list of sales data
+        return salesData;
+    }
+
     public static void main(String[] args) {
-        OrdersDAO orderDao = new OrdersDAO();
-        List<OrderDetails> orderDetailsList = orderDao.getOrderDetailByOrderId(22);
-        for (OrderDetails orderDetails : orderDetailsList) {
-            System.out.println(orderDetails.toString());
+        try {
+            OrdersDAO orderDao = new OrdersDAO();
+
+            List<Object[]> salesData = orderDao.getProductSalesByMonth();
+
+            // Print the sales data
+            System.out.println("Sales Data (Year, Month, Total Quantity Sold):");
+            for (Object[] row : salesData) {
+                int year = (int) row[0];
+                int month = (int) row[1];
+                int totalQuantitySold = (int) row[2];
+
+                System.out.println("Year: " + year + ", Month: " + month + ", Total Quantity Sold: " + totalQuantitySold);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

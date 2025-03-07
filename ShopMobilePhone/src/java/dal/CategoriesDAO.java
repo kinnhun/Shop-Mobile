@@ -52,4 +52,30 @@ public class CategoriesDAO extends DBContext {
         return null;
     }
 
+    public List<Categories> getAllCategoriesAndQuantity() {
+        List<Categories> list = new ArrayList<>();
+        String sql = "SELECT c.category_id, c.category_name, c.status, c.created_at, "
+                + "       COALESCE(SUM(p.stock_quantity), 0) AS total_quantity "
+                + "FROM Categories c "
+                + "LEFT JOIN Products p ON c.category_id = p.category_id "
+                + "GROUP BY c.category_id, c.category_name, c.status, c.created_at";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Categories category = new Categories(
+                        rs.getInt("category_id"),
+                        rs.getString("category_name"),
+                        rs.getString("status"),
+                        rs.getTimestamp("created_at"),
+                        rs.getInt("total_quantity")
+                );
+                list.add(category);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 }

@@ -79,16 +79,102 @@
                     </a>
                 </div>
                 <div class="col-lg-4 col-6 text-left">
-                    <form action="">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for products">
-                            <div class="input-group-append">
-                                <span class="input-group-text bg-transparent text-primary">
-                                    <i class="fa fa-search"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </form>
+
+
+
+                    <!-- Form tìm kiếm -->
+                   <form action="shop" method="get" class="position-relative" id="searchForm">
+    <input name="action" value="search" hidden="">
+    <div class="input-group">
+        <input name="searchText" type="text" id="searchInput" class="form-control" placeholder="Search for products" autocomplete="off">
+        <div class="input-group-append">
+            <span class="input-group-text bg-transparent text-primary" id="searchIcon">
+                <i class="fa fa-search"></i>
+            </span>
+        </div>
+    </div>
+    <ul id="searchResults" class="list-group position-absolute w-100 mt-1 d-none" style="z-index: 1000;"></ul>
+</form>
+
+<script>
+    document.getElementById("searchIcon").addEventListener("click", function() {
+        document.getElementById("searchForm").submit();
+    });
+</script>
+
+
+
+                    <!-- Danh sách sản phẩm dưới dạng JavaScript -->
+                    <script>
+                        // Lấy danh sách sản phẩm từ JSP
+                        const allProducts = [
+                        <c:forEach var="product" items="${allProducts}">
+                            {id: "${product.productId}", name: "${product.name}"},
+                        </c:forEach>
+                        ];
+
+                        // Lấy phần tử input và danh sách gợi ý
+                        const searchInput = document.getElementById("searchInput");
+                        const searchResults = document.getElementById("searchResults");
+
+                        // Xử lý nhập liệu & hiển thị gợi ý
+                        searchInput.addEventListener("input", function () {
+                            const keyword = searchInput.value.toLowerCase();
+                            searchResults.innerHTML = ""; // Xóa kết quả cũ
+
+                            if (keyword.length > 0) {
+                                const filteredProducts = allProducts.filter(product =>
+                                    product.name.toLowerCase().includes(keyword)
+                                );
+
+                                if (filteredProducts.length > 0) {
+                                    searchResults.classList.remove("d-none"); // Hiện danh sách
+
+                                    filteredProducts.forEach((product, index) => {
+                                        const li = document.createElement("li");
+                                        li.classList.add("list-group-item", "list-group-item-action");
+                                        li.textContent = product.name;
+                                        li.setAttribute("data-id", product.id);
+                                        li.setAttribute("tabindex", index); // Cho phép dùng bàn phím chọn
+                                        searchResults.appendChild(li);
+
+                                        // Chọn sản phẩm khi click
+                                        li.addEventListener("click", function () {
+                                            searchInput.value = product.name;
+                                            searchResults.classList.add("d-none"); // Ẩn dropdown
+                                        });
+
+                                        // Chọn bằng bàn phím
+                                        li.addEventListener("keydown", function (event) {
+                                            if (event.key === "Enter") {
+                                                searchInput.value = product.name;
+                                                searchResults.classList.add("d-none"); // Ẩn dropdown
+                                                event.preventDefault(); // Ngăn form submit
+                                            }
+                                        });
+                                    });
+                                } else {
+                                    searchResults.classList.add("d-none"); // Ẩn dropdown nếu không có kết quả
+                                }
+                            } else {
+                                searchResults.classList.add("d-none"); // Ẩn nếu input rỗng
+                            }
+                        });
+
+                        // Ẩn dropdown khi click ra ngoài
+                        document.addEventListener("click", function (event) {
+                            if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+                                searchResults.classList.add("d-none");
+                            }
+                        });
+
+                    </script>
+
+
+
+
+
+
                 </div>
                 <div class="col-lg-4 col-6 text-right">
                     <p class="m-0">FPT</p>

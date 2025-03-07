@@ -109,6 +109,13 @@ public class LoginRegisterController extends HttpServlet {
 
             UserDAO userDAO = new UserDAO();
             Users user = userDAO.authenticateUser(username, password);
+            
+            
+            if(user.getStatus().equals("inactive")){
+                request.setAttribute("error", "Tài khoản của bạn bị khóa!");
+                doGet(request, response);
+                return;
+            }
 
             if (user != null) {
 

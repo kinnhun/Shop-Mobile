@@ -172,4 +172,32 @@ public class UserDAO extends DBContext {
         return false;
     }
 
+ public int totalUser() {
+    String sql = "SELECT COUNT(*) FROM Users";
+    try (PreparedStatement ps = connection.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return 0; 
+}
+
+public int totalNewUser() {
+    String sql = "SELECT COUNT(*) FROM Users WHERE created_at >= DATEADD(MONTH, -1, GETDATE())";
+    try (PreparedStatement ps = connection.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return 0; 
+}
+
+
+
 }

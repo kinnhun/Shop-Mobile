@@ -15,6 +15,8 @@ public class Categories {
     private String categoryName;
     private String status;
     private Date createdAt;
+    
+    private int quanityCategory;
 
     public Categories() {
     }
@@ -25,6 +27,24 @@ public class Categories {
         this.status = status;
         this.createdAt = createdAt;
     }
+
+    public Categories(int categoryId, String categoryName, String status, Date createdAt, int quanityCategory) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.quanityCategory = quanityCategory;
+    }
+    
+
+    public int getQuanityCategory() {
+        return quanityCategory;
+    }
+
+    public void setQuanityCategory(int quanityCategory) {
+        this.quanityCategory = quanityCategory;
+    }
+    
 
     public int getCategoryId() {
         return categoryId;

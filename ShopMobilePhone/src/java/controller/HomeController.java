@@ -71,7 +71,6 @@ public class HomeController extends HttpServlet {
         request.getSession().removeAttribute("message");
         request.getSession().removeAttribute("error");
 
-        
         CategoriesDAO cdao = new CategoriesDAO();
         List<Categories> listCategories = cdao.getAllCategories();
         HttpSession session = request.getSession();
@@ -90,11 +89,15 @@ public class HomeController extends HttpServlet {
             FavoriteDAO fdao = new FavoriteDAO();
             int countFavorite = fdao.countFavoriteByUserId(user.getUserId());
             session.setAttribute("countFavorite", countFavorite);
-            
+
             CartDAO cartDao = new CartDAO();
             int countCart = cartDao.countCartByUserId(user.getUserId());
             session.setAttribute("countCart", countCart);
         }
+
+        // search 
+        List<Products> listProductSearch = pdao.getListAllProduct();
+        session.setAttribute("allProducts", listProductSearch);
 
         request.getRequestDispatcher("home.jsp").forward(request, response);
     }
@@ -110,7 +113,9 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+      
+
     }
 
     /**

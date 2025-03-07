@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.OrderDetails;
 import model.Orders;
+import model.Users;
 
 @WebServlet(name = "ManagerOrderController", urlPatterns = {"/admin/manager-order"})
 public class ManagerOrderController extends HttpServlet {
@@ -58,6 +59,17 @@ public class ManagerOrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+          HttpSession session = request.getSession();
+        Users user = (Users) session.getAttribute("username");
+        
+        if (user == null || !"admin".equals(user.getRole())) {
+            session.setAttribute("error", "Bạn không có quyền truy cập!");
+            response.sendRedirect("../login-register");
+            return;
+        }
+        
+        
 
         OrdersDAO odao = new OrdersDAO();
 

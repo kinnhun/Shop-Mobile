@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
+import model.Users;
 import model.Vouchers;
 
 @WebServlet(name = "ManagerVoucherController", urlPatterns = {"/admin/manager-voucher"})
@@ -61,6 +62,14 @@ public class ManagerVoucherController extends HttpServlet {
             throws ServletException, IOException {
         VouchersDAO vdao = new VouchersDAO();
         HttpSession session = request.getSession();
+
+        Users user = (Users) session.getAttribute("username");
+
+        if (user == null || !"admin".equals(user.getRole())) {
+            session.setAttribute("error", "Bạn không có quyền truy cập!");
+            response.sendRedirect("../login-register");
+            return;
+        }
 
         String action = request.getParameter("action");
         if ("delete".equals(action)) {

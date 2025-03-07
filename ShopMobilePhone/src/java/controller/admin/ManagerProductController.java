@@ -19,6 +19,7 @@ import java.util.List;
 import model.Categories;
 import model.ProductAttributes;
 import model.Products;
+import model.Users;
 
 @WebServlet(name = "ManagerProductController", urlPatterns = {"/admin/manager-product"})
 public class ManagerProductController extends HttpServlet {
@@ -63,6 +64,16 @@ public class ManagerProductController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         ProductsDAO pdao = new ProductsDAO();
+        
+        
+        
+        Users user = (Users) session.getAttribute("username");
+        
+        if (user == null || !"admin".equals(user.getRole())) {
+            session.setAttribute("error", "Bạn không có quyền truy cập!");
+            response.sendRedirect("../login-register");
+            return;
+        }
 
         if (request.getParameter("action") != null) {
             String action = request.getParameter("action");

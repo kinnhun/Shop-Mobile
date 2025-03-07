@@ -103,12 +103,13 @@
                                                         <td>${user.updatedAt}</td>
                                                         <td>
                                                             <div class="d-flex">
-                                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" 
-                                                                   onclick="openEditModal('${user.userId}', '${user.fullName}', '${user.email}', '${user.phone}', '${user.address}', '${user.role}', '${user.status}')">
-                                                                    <i class="fas fa-pencil-alt"></i>
-                                                                </a>
-                                                              
-                                                            </div>												
+                                                                <c:if test="${idAdmin != user.userId}">
+                                                                    <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" 
+                                                                       onclick="openEditModal('${user.userId}', '${user.fullName}', '${user.email}', '${user.phone}', '${user.address}', '${user.role}', '${user.status}')">
+                                                                        <i class="fas fa-pencil-alt"></i>
+                                                                    </a>
+                                                                </c:if>
+                                                            </div>											
                                                         </td>
 
                                                     </tr>
@@ -167,7 +168,7 @@
                                                             <div class="mb-3">
                                                                 <label for="editRole" class="form-label">Vai trò</label>
                                                                 <select class="form-select" id="editRole" name="role">
-                                                                        <option value="customer">Người dùng</option>
+                                                                    <option value="customer">Người dùng</option>
                                                                     <option value="admin">Quản trị viên</option>
                                                                 </select>
                                                             </div>

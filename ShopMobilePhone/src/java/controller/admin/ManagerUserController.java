@@ -72,6 +72,8 @@ public class ManagerUserController extends HttpServlet {
             return;
         }
         
+        request.setAttribute("idAdmin", user.getUserId());
+        
 
         UserDAO userDao = new UserDAO();
         List<Users> listUsers = userDao.getAllUser();

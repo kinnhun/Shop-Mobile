@@ -4,6 +4,10 @@
  */
 package controller.admin;
 
+import dal.CategoriesDAO;
+import dal.OrdersDAO;
+import dal.ProductsDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +16,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Categories;
 import model.Users;
 
 /**
@@ -60,16 +69,58 @@ public class DashboardController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
-        Users user = (Users) session.getAttribute("username");
+        try {
+            HttpSession session = request.getSession();
+            Users user = (Users) session.getAttribute("username");
 
-        if (user == null || !"admin".equals(user.getRole())) {
-            session.setAttribute("error", "Bạn không có quyền truy cập!");
-            response.sendRedirect("../login-register");
-            return;
+            if (user == null || !"admin".equals(user.getRole())) {
+                session.setAttribute("error", "Bạn không có quyền truy cập!");
+                response.sendRedirect("../login-register");
+                return;
+            }
+
+            ProductsDAO pdao = new ProductsDAO();
+            OrdersDAO odao = new OrdersDAO();
+            UserDAO udao = new UserDAO();
+            CategoriesDAO cdao = new CategoriesDAO();
+            // thống kê đơn hàng
+
+            int totalOrder = odao.totalOrder();
+            request.setAttribute("totalOrder", totalOrder);
+
+            int totalOrderPending = odao.totalOrderStatus("pending");
+            request.setAttribute("totalOrderPending", totalOrderPending);
+
+            int totalOrderDelivered = odao.totalOrderStatus("delivered");
+            request.setAttribute("totalOrderDelivered", totalOrderDelivered);
+
+            // người dùng
+            int totalUser = udao.totalUser();
+            request.setAttribute("totalUser", totalUser);
+
+            int totalNewUser = udao.totalNewUser();
+            request.setAttribute("totalNewUser", totalNewUser);
+
+            // hàng
+            int totalQuanityInStock = pdao.totalQuanityInStock();
+            request.setAttribute("totalQuanityInStock", totalQuanityInStock);
+
+            int totalQuantityToShip = pdao.totalQuantityToShip();
+            request.setAttribute("totalQuantityToShip", totalQuantityToShip);
+
+            // số sp trong từng category
+            List<Categories> listc = cdao.getAllCategoriesAndQuantity();
+            request.setAttribute("listc", listc);
+
+            //số sp bán ra từng tháng
+            List<Object[]> productSalesByMonth = odao.getProductSalesByMonth();
+            request.setAttribute("productSalesByMonth", productSalesByMonth);
+
+            request.getRequestDispatcher("dashbroad.jsp").forward(request, response);
+            session.removeAttribute("error");
+        } catch (SQLException ex) {
+            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        request.getRequestDispatcher("dashbroad.jsp").forward(request, response);
     }
 
     /**
