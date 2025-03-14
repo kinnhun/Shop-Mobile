@@ -4,8 +4,8 @@
  */
 package controller;
 
-import dal.CartDAO;
-import dal.VouchersDAO;
+import DAO.CartDAO;
+import DAO.VouchersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -87,7 +87,7 @@ public class CartController extends HttpServlet {
         }
         request.setAttribute("totalCart", totalCart);
 
-        request.getRequestDispatcher("cart.jsp").forward(request, response);
+        request.getRequestDispatcher("/user/cart.jsp").forward(request, response);
         request.removeAttribute("productAttributesId");
         session.removeAttribute("error");
         request.removeAttribute("error");

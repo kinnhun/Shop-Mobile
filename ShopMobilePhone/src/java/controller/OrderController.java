@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.OrdersDAO;
+import DAO.OrdersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -76,7 +76,7 @@ public class OrderController extends HttpServlet {
                 int orderId = Integer.parseInt(request.getParameter("orderId"));
                 List<OrderDetails> listOrderDetail = orderDao.getOrderDetailByOrderId(orderId);
                 request.setAttribute("listOrderDetails", listOrderDetail);
-                request.getRequestDispatcher("orderDetail.jsp").forward(request, response);
+                request.getRequestDispatcher("/user/orderDetail.jsp").forward(request, response);
                 return;
             }
         }
@@ -84,7 +84,7 @@ public class OrderController extends HttpServlet {
         List<Orders> listOrders = orderDao.getAllOrderByUserId(user.getUserId());
         request.setAttribute("listOrders", listOrders);
 
-        request.getRequestDispatcher("order.jsp").forward(request, response);
+        request.getRequestDispatcher("/user/order.jsp").forward(request, response);
     }
 
     /**

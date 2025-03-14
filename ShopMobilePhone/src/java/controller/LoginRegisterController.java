@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.UserDAO;
+import DAO.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -71,7 +71,7 @@ public class LoginRegisterController extends HttpServlet {
 
         if (request.getParameter("register") != null) {
             if (request.getParameter("register").equals("true")) {
-                request.getRequestDispatcher("register.jsp").forward(request, response);
+                request.getRequestDispatcher("/user/register.jsp").forward(request, response);
                 return;
             }
 
@@ -87,7 +87,7 @@ public class LoginRegisterController extends HttpServlet {
 
             }
         }
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        request.getRequestDispatcher("/user/login.jsp").forward(request, response);
     }
 
     /**
@@ -170,10 +170,10 @@ public class LoginRegisterController extends HttpServlet {
 
             if (isRegistered) {
                 request.setAttribute("message", "Đăng ký thành công! Hãy đăng nhập.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.getRequestDispatcher("/user/login.jsp").forward(request, response);
             } else {
                 request.setAttribute("error", "Đăng ký thất bại, vui lòng thử lại!");
-                request.getRequestDispatcher("register.jsp").forward(request, response);
+                request.getRequestDispatcher("/user/register.jsp").forward(request, response);
             }
         }
     }

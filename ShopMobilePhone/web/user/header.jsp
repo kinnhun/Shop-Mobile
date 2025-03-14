@@ -240,7 +240,7 @@
                 </div>
             </div>
         </div>
-        <%@ include file="./notification.jsp" %>
+        <%@ include file="../notification.jsp" %>
 
         <!-- Navbar End -->
     </body>

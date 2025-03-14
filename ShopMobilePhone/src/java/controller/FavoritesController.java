@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.FavoriteDAO;
+import DAO.FavoriteDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -104,7 +104,7 @@ public class FavoritesController extends HttpServlet {
         }
         session.setAttribute("countFavorite", count);
 
-        request.getRequestDispatcher("favorites.jsp").forward(request, response);
+        request.getRequestDispatcher("/user/favorites.jsp").forward(request, response);
         request.removeAttribute("error");
         request.removeAttribute("message");
         return;

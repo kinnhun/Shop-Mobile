@@ -4,11 +4,11 @@
  */
 package controller;
 
-import dal.CartDAO;
-import dal.CategoriesDAO;
-import dal.FavoriteDAO;
-import dal.OrdersDAO;
-import dal.ProductsDAO;
+import DAO.CartDAO;
+import DAO.CategoriesDAO;
+import DAO.FavoriteDAO;
+import DAO.OrdersDAO;
+import DAO.ProductsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -99,7 +99,7 @@ public class HomeController extends HttpServlet {
         List<Products> listProductSearch = pdao.getListAllProduct();
         session.setAttribute("allProducts", listProductSearch);
 
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        request.getRequestDispatcher("/user/home.jsp").forward(request, response);
     }
 
     /**

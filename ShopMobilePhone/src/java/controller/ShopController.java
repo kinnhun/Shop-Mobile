@@ -4,8 +4,8 @@
  */
 package controller;
 
-import dal.CategoriesDAO;
-import dal.ProductsDAO;
+import DAO.CategoriesDAO;
+import DAO.ProductsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -137,7 +137,7 @@ public class ShopController extends HttpServlet {
         List<Categories> listCategories = cdao.getAllCategories();
         request.setAttribute("listCategories", listCategories);
 
-        request.getRequestDispatcher("shop.jsp").forward(request, response);
+        request.getRequestDispatcher("/user/shop.jsp").forward(request, response);
         request.removeAttribute("error");
 
     }

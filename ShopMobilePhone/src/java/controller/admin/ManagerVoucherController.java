@@ -4,7 +4,7 @@
  */
 package controller.admin;
 
-import dal.VouchersDAO;
+import DAO.VouchersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

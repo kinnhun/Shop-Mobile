@@ -4,8 +4,8 @@
  */
 package controller.admin;
 
-import dal.CategoriesDAO;
-import dal.ProductsDAO;
+import DAO.CategoriesDAO;
+import DAO.ProductsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

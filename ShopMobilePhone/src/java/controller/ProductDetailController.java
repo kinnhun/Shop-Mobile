@@ -4,8 +4,8 @@
  */
 package controller;
 
-import dal.ProductsDAO;
-import dal.ReviewDAO;
+import DAO.ProductsDAO;
+import DAO.ReviewDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -108,7 +108,7 @@ public class ProductDetailController extends HttpServlet {
         double averageRating = rdao.getAverageRating(id);
         request.setAttribute("averageRating", averageRating);
 
-        request.getRequestDispatcher("detail.jsp").forward(request, response);
+        request.getRequestDispatcher("/user/detail.jsp").forward(request, response);
         HttpSession session = request.getSession();
         session.removeAttribute("error");
         request.removeAttribute("error");

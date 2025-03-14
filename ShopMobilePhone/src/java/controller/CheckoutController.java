@@ -4,9 +4,9 @@
  */
 package controller;
 
-import dal.CartDAO;
-import dal.OrdersDAO;
-import dal.VouchersDAO;
+import DAO.CartDAO;
+import DAO.OrdersDAO;
+import DAO.VouchersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -87,7 +87,7 @@ public class CheckoutController extends HttpServlet {
         }
         request.setAttribute("totalCart", totalCart);
 
-        request.getRequestDispatcher("checkout.jsp").forward(request, response);
+        request.getRequestDispatcher("/user/checkout.jsp").forward(request, response);
     }
 
     /**
@@ -155,7 +155,7 @@ public class CheckoutController extends HttpServlet {
             response.sendRedirect("order");
         } else {
             request.setAttribute("error", "Đặt hàng thất bại. Vui lòng thử lại!");
-            request.getRequestDispatcher("checkout.jsp").forward(request, response);
+            request.getRequestDispatcher("/user/checkout.jsp").forward(request, response);
         }
 
     }
