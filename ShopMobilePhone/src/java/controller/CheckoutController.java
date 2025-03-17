@@ -18,8 +18,10 @@ import jakarta.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.List;
 import model.Cart;
+import model.OrderDetails;
 import model.Users;
 import model.Vouchers;
+import util.SendMail;
 
 @WebServlet(name = "CheckoutController", urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
@@ -151,6 +153,11 @@ public class CheckoutController extends HttpServlet {
             // thêm vào orderDetal 
             boolean checkAddOrderDetail = odao.addOrderDetailByUserId(user.getUserId());
 
+            List<OrderDetails>listOrderDetail = odao.getLatestOrderDetails(user.getUserId());
+            SendMail sm = new SendMail();
+            sm.sendMail(user.getEmail(), user.getFullName(),listOrderDetail);
+            
+            
             session.setAttribute("message", "Đặt hàng thành công!");
             response.sendRedirect("order");
         } else {

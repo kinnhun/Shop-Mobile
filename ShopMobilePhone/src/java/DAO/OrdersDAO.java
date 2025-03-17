@@ -352,24 +352,61 @@ public class OrdersDAO extends DBContext {
         return salesData;
     }
 
-    public static void main(String[] args) {
-        try {
-            OrdersDAO orderDao = new OrdersDAO();
+    public List<OrderDetails> getLatestOrderDetails(int userId) {
+        List<OrderDetails> orderDetailsList = new ArrayList<>();
+        String getOrderIdSQL = "SELECT TOP 1 order_id FROM Orders WHERE user_id = ? ORDER BY created_at DESC";
+        String getOrderDetailsSQL = "SELECT * FROM OrderDetails WHERE order_id = ?";
 
-            List<Object[]> salesData = orderDao.getProductSalesByMonth();
+        OrdersDAO orderDao = new OrdersDAO();
+        ProductsDAO productDao = new ProductsDAO();
 
-            // Print the sales data
-            System.out.println("Sales Data (Year, Month, Total Quantity Sold):");
-            for (Object[] row : salesData) {
-                int year = (int) row[0];
-                int month = (int) row[1];
-                int totalQuantitySold = (int) row[2];
+        try (PreparedStatement psOrder = connection.prepareStatement(getOrderIdSQL)) {
+            psOrder.setInt(1, userId);
+            ResultSet rsOrder = psOrder.executeQuery();
 
-                System.out.println("Year: " + year + ", Month: " + month + ", Total Quantity Sold: " + totalQuantitySold);
+            if (rsOrder.next()) {
+                int latestOrderId = rsOrder.getInt("order_id");
+
+                try (PreparedStatement psDetails = connection.prepareStatement(getOrderDetailsSQL)) {
+                    psDetails.setInt(1, latestOrderId);
+                    ResultSet rsDetails = psDetails.executeQuery();
+
+                    while (rsDetails.next()) {
+                        OrderDetails orderDetail = new OrderDetails();
+
+                        orderDetail.setOrderDetaiId(rsDetails.getInt("order_detail_id"));
+
+                        Orders order = orderDao.getOrderById(rsDetails.getInt("order_id"));
+                        orderDetail.setOrderId(order);
+
+                        Products product = productDao.getProductById(rsDetails.getInt("product_id"));
+                        orderDetail.setProductId(product);
+
+                        ProductAttributes productAttributes = productDao.getProductAttributesById(rsDetails.getInt("attribute_id"));
+                        orderDetail.setAttributeId(productAttributes);
+
+                        orderDetail.setQuantity(rsDetails.getInt("quantity"));
+                        orderDetail.setPrice(rsDetails.getBigDecimal("price"));
+
+                        orderDetailsList.add(orderDetail);
+                    }
+                }
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return orderDetailsList;
+    }
+
+    public static void main(String[] args) {
+
+        OrdersDAO orderDao = new OrdersDAO();
+
+        List<OrderDetails> orderDetailsList = orderDao.getLatestOrderDetails(1);
+        for (OrderDetails orderDetails : orderDetailsList) {
+            System.out.println(orderDetails.toString());
+        }
+
     }
 
 }
